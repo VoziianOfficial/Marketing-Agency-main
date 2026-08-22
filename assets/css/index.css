@@ -971,6 +971,8 @@
 
 .about-agency {
     overflow: hidden;
+    padding-top: clamp(38px, 3.5vw, 59px);
+    padding-bottom: clamp(38px, 3.5vw, 59px);
     background: var(--color-bg);
 }
 
@@ -2430,6 +2432,8 @@
    ========================================================= */
 
 .faq-section {
+    padding-top: clamp(38px, 3.5vw, 59px);
+    padding-bottom: clamp(38px, 3.5vw, 59px);
     background: var(--color-bg);
 }
 
