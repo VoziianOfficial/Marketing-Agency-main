@@ -567,7 +567,11 @@
 }
 
 .process-swiper {
-    overflow: visible;
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    overflow: hidden;
+    padding-block: 10px 14px;
 }
 
 .process-swiper .swiper-wrapper {

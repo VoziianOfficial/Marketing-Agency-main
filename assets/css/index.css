@@ -675,7 +675,11 @@
 
 .services-swiper {
     position: relative;
-    overflow: visible;
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    overflow: hidden;
+    padding-block: 10px 14px;
 }
 
 .services-swiper .swiper-wrapper {
@@ -846,34 +850,6 @@
     gap: 10px;
     margin-top: 30px;
 }
-
-.swiper-control {
-    display: grid;
-    width: 52px;
-    height: 52px;
-    place-items: center;
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    background: #ffffff;
-    cursor: pointer;
-    box-shadow: var(--shadow-xs);
-    transition:
-        background-color var(--transition-fast),
-        color var(--transition-fast),
-        transform var(--transition-base);
-}
-
-.swiper-control:hover {
-    background: var(--color-dark);
-    color: #ffffff;
-    transform: translateY(-3px);
-}
-
-.swiper-control svg {
-    width: 18px;
-    height: 18px;
-}
-
 
 /* =========================================================
    5. ABOUT
@@ -1231,11 +1207,15 @@
 }
 
 .projects-swiper {
-    overflow: visible;
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    overflow: hidden;
+    padding-block: 12px 18px;
 }
 
 .projects-swiper .swiper-slide {
-    width: min(590px, 72vw);
+    width: min(590px, 82%);
     opacity: 0.52;
     transform: scale(0.9);
     transition:
@@ -1578,9 +1558,13 @@
 
 .testimonials-section__grid {
     display: grid;
-    grid-template-columns: minmax(390px, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     align-items: center;
     gap: clamp(52px, 7vw, 110px);
+}
+
+.testimonials-section__grid > * {
+    min-width: 0;
 }
 
 .testimonial-media {
@@ -1613,6 +1597,8 @@
 
 .testimonials-swiper {
     width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
     overflow: hidden;
 }
 
@@ -2612,7 +2598,7 @@
     }
 
     .projects-swiper .swiper-slide {
-        width: 84vw;
+        width: 86%;
         transform: scale(0.94);
     }
 

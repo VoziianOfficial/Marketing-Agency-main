@@ -270,6 +270,165 @@ function initHomeSwipers() {
 }
 
 
+function prepareSwiperLoop(
+    swiperElement,
+    minimumSlides
+) {
+    const wrapper =
+        swiperElement?.querySelector(
+            ".swiper-wrapper"
+        );
+
+    if (!wrapper) {
+        return;
+    }
+
+    const sourceSlides =
+        Array.from(
+            wrapper.children
+        ).filter((slide) =>
+            slide.classList.contains(
+                "swiper-slide"
+            ) &&
+            !slide.dataset.loopFill
+        );
+
+    if (!sourceSlides.length) {
+        return;
+    }
+
+    let slideIndex = 0;
+
+    while (
+        wrapper.children.length <
+        minimumSlides
+    ) {
+        const clone =
+            sourceSlides[
+                slideIndex %
+                sourceSlides.length
+            ].cloneNode(true);
+
+        clone.dataset.loopFill = "true";
+        clone
+            .querySelectorAll("[id]")
+            .forEach((element) => {
+                element.removeAttribute("id");
+            });
+
+        wrapper.appendChild(clone);
+        slideIndex += 1;
+    }
+}
+
+
+function refreshSwiperAfterLayout(
+    swiper
+) {
+    if (
+        !swiper ||
+        swiper.destroyed
+    ) {
+        return;
+    }
+
+    swiper.update();
+
+    if (swiper.params.loop) {
+        swiper.loopFix();
+    }
+}
+
+
+function countOriginalSwiperSlides(
+    swiperElement
+) {
+    return swiperElement
+        ?.querySelectorAll(
+            ".swiper-wrapper > .swiper-slide:not([data-loop-fill])"
+        ).length || 0;
+}
+
+
+function setupManualSwiperPagination(
+    swiper,
+    pagination,
+    slideCount
+) {
+    if (
+        !swiper ||
+        !pagination ||
+        !slideCount
+    ) {
+        return;
+    }
+
+    pagination.innerHTML = "";
+    pagination.classList.add(
+        "swiper-pagination-clickable",
+        "swiper-pagination-bullets",
+        "swiper-pagination-horizontal"
+    );
+
+    const bullets =
+        Array.from(
+            { length: slideCount },
+            (_, index) => {
+                const bullet =
+                    document.createElement("button");
+
+                bullet.type = "button";
+                bullet.className =
+                    "swiper-pagination-bullet";
+                bullet.setAttribute(
+                    "aria-label",
+                    `Go to testimonial ${index + 1}`
+                );
+
+                bullet.addEventListener(
+                    "click",
+                    () => {
+                        swiper.slideToLoop(index);
+                    }
+                );
+
+                pagination.appendChild(bullet);
+
+                return bullet;
+            }
+        );
+
+    const updatePagination = () => {
+        const activeIndex =
+            swiper.realIndex % slideCount;
+
+        bullets.forEach((bullet, index) => {
+            const isActive =
+                index === activeIndex;
+
+            bullet.classList.toggle(
+                "swiper-pagination-bullet-active",
+                isActive
+            );
+
+            bullet.setAttribute(
+                "aria-current",
+                isActive
+                    ? "true"
+                    : "false"
+            );
+        });
+    };
+
+    swiper.on(
+        "slideChange realIndexChange resize",
+        updatePagination
+    );
+
+    updatePagination();
+}
+
+
 /* =========================================================
    5. SERVICES SWIPER
    ========================================================= */
@@ -301,19 +460,29 @@ function initServicesSwiper(
             ".services-swiper__next"
         );
 
+    prepareSwiperLoop(
+        swiperElement,
+        12
+    );
+
     const options = {
         slidesPerView: 1,
         spaceBetween: 16,
+        slidesPerGroup: 1,
 
         loop: true,
-        loopAdditionalSlides: 2,
+        loopAdditionalSlides: 3,
 
         speed: reduceMotion
             ? 0
             : 720,
 
         grabCursor: true,
-        watchOverflow: true,
+        watchOverflow: false,
+        watchSlidesProgress: true,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        roundLengths: true,
 
         observer: true,
         observeParents: true,
@@ -338,17 +507,30 @@ function initServicesSwiper(
         breakpoints: {
             0: {
                 slidesPerView: 1,
+                slidesPerGroup: 1,
                 spaceBetween: 14
             },
 
             700: {
                 slidesPerView: 2,
+                slidesPerGroup: 1,
                 spaceBetween: 18
             },
 
             1120: {
                 slidesPerView: 3,
+                slidesPerGroup: 1,
                 spaceBetween: 22
+            }
+        },
+
+        on: {
+            resize() {
+                refreshSwiperAfterLayout(this);
+            },
+
+            orientationchange() {
+                refreshSwiperAfterLayout(this);
             }
         }
     };
@@ -401,19 +583,30 @@ function initProjectsSwiper(
             ".projects-swiper__next"
         );
 
+    prepareSwiperLoop(
+        swiperElement,
+        16
+    );
+
     const options = {
         slidesPerView: "auto",
         centeredSlides: true,
+        slidesPerGroup: 1,
         spaceBetween: 22,
 
         loop: true,
-        loopAdditionalSlides: 3,
+        loopAdditionalSlides: 4,
 
         speed: reduceMotion
             ? 0
             : 850,
 
         grabCursor: true,
+        watchOverflow: false,
+        watchSlidesProgress: true,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        roundLengths: true,
 
         observer: true,
         observeParents: true,
@@ -437,14 +630,17 @@ function initProjectsSwiper(
 
         breakpoints: {
             0: {
+                slidesPerGroup: 1,
                 spaceBetween: 14
             },
 
             760: {
+                slidesPerGroup: 1,
                 spaceBetween: 20
             },
 
             1200: {
+                slidesPerGroup: 1,
                 spaceBetween: 26
             }
         },
@@ -459,6 +655,12 @@ function initProjectsSwiper(
             },
 
             resize() {
+                refreshSwiperAfterLayout(this);
+                updateProjectSlides(this);
+            },
+
+            orientationchange() {
+                refreshSwiperAfterLayout(this);
                 updateProjectSlides(this);
             }
         }
@@ -530,19 +732,34 @@ function initTestimonialsSwiper(
             ".testimonials-pagination"
         );
 
+    const testimonialCount =
+        countOriginalSwiperSlides(
+            swiperElement
+        );
+
+    prepareSwiperLoop(
+        swiperElement,
+        8
+    );
+
     const options = {
         slidesPerView: 1,
+        slidesPerGroup: 1,
         loop: true,
+        loopAdditionalSlides: 2,
 
         speed: reduceMotion
             ? 0
             : 780,
 
-        effect: reduceMotion
-            ? "slide"
-            : "creative",
+        effect: "slide",
 
         grabCursor: true,
+        watchOverflow: false,
+        watchSlidesProgress: true,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        roundLengths: true,
 
         observer: true,
         observeParents: true,
@@ -562,45 +779,29 @@ function initTestimonialsSwiper(
                 delay: 5600,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true
-            }
-    };
-
-    if (!reduceMotion) {
-        options.creativeEffect = {
-            limitProgress: 2,
-
-            prev: {
-                translate: [
-                    "-8%",
-                    0,
-                    -1
-                ],
-                opacity: 0,
-                scale: 0.97
             },
 
-            next: {
-                translate: [
-                    "8%",
-                    0,
-                    -1
-                ],
-                opacity: 0,
-                scale: 0.97
+        on: {
+            resize() {
+                refreshSwiperAfterLayout(this);
+            },
+
+            orientationchange() {
+                refreshSwiperAfterLayout(this);
             }
-        };
-    }
+        }
+    };
 
-    if (pagination) {
-        options.pagination = {
-            el: pagination,
-            clickable: true
-        };
-    }
-
-    new window.Swiper(
+    const testimonialsSwiper =
+        new window.Swiper(
         swiperElement,
         options
+    );
+
+    setupManualSwiperPagination(
+        testimonialsSwiper,
+        pagination,
+        testimonialCount
     );
 }
 

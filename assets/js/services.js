@@ -25,6 +25,76 @@ function serviceReducedMotion() {
 }
 
 
+function prepareProcessSwiperLoop(
+    swiperElement,
+    minimumSlides
+) {
+    const wrapper =
+        swiperElement?.querySelector(
+            ".swiper-wrapper"
+        );
+
+    if (!wrapper) {
+        return;
+    }
+
+    const sourceSlides =
+        Array.from(
+            wrapper.children
+        ).filter((slide) =>
+            slide.classList.contains(
+                "swiper-slide"
+            ) &&
+            !slide.dataset.loopFill
+        );
+
+    if (!sourceSlides.length) {
+        return;
+    }
+
+    let slideIndex = 0;
+
+    while (
+        wrapper.children.length <
+        minimumSlides
+    ) {
+        const clone =
+            sourceSlides[
+                slideIndex %
+                sourceSlides.length
+            ].cloneNode(true);
+
+        clone.dataset.loopFill = "true";
+        clone
+            .querySelectorAll("[id]")
+            .forEach((element) => {
+                element.removeAttribute("id");
+            });
+
+        wrapper.appendChild(clone);
+        slideIndex += 1;
+    }
+}
+
+
+function refreshProcessSwiperAfterLayout(
+    swiper
+) {
+    if (
+        !swiper ||
+        swiper.destroyed
+    ) {
+        return;
+    }
+
+    swiper.update();
+
+    if (swiper.params.loop) {
+        swiper.loopFix();
+    }
+}
+
+
 /* =========================================================
    2. SERVICE HERO ENTRANCE
    ========================================================= */
@@ -205,19 +275,29 @@ function initProcessSwiper() {
     const reduceMotion =
         serviceReducedMotion();
 
+    prepareProcessSwiperLoop(
+        swiperElement,
+        9
+    );
+
     const options = {
         slidesPerView: 1,
         spaceBetween: 16,
+        slidesPerGroup: 1,
 
         loop: true,
-        loopAdditionalSlides: 2,
+        loopAdditionalSlides: 3,
 
         speed: reduceMotion
             ? 0
             : 760,
 
         grabCursor: true,
-        watchOverflow: true,
+        watchOverflow: false,
+        watchSlidesProgress: true,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        roundLengths: true,
 
         observer: true,
         observeParents: true,
@@ -242,16 +322,19 @@ function initProcessSwiper() {
         breakpoints: {
             0: {
                 slidesPerView: 1,
+                slidesPerGroup: 1,
                 spaceBetween: 14
             },
 
             680: {
                 slidesPerView: 2,
+                slidesPerGroup: 1,
                 spaceBetween: 18
             },
 
             1120: {
                 slidesPerView: 3,
+                slidesPerGroup: 1,
                 spaceBetween: 22
             }
         },
@@ -266,6 +349,12 @@ function initProcessSwiper() {
             },
 
             resize() {
+                refreshProcessSwiperAfterLayout(this);
+                updateProcessSlides(this);
+            },
+
+            orientationchange() {
+                refreshProcessSwiperAfterLayout(this);
                 updateProcessSlides(this);
             }
         }
