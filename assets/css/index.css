@@ -1520,29 +1520,36 @@
 
 .projects-showcase {
     overflow: hidden;
-    background: var(--color-dark);
-    color: #ffffff;
+    background: #f3f0f6;
+    color: var(--color-text);
 }
 
 .projects-showcase::before,
 .projects-showcase::after {
     content: "";
     position: absolute;
-    left: -5%;
-    width: 110%;
-    height: 120px;
-    border-radius: 50%;
-    background: #1d1b22;
+    left: 0;
+    width: 100%;
+    height: clamp(70px, 8vw, 120px);
     pointer-events: none;
 }
 
 .projects-showcase::before {
-    top: -74px;
+    top: 0;
+    background: linear-gradient(
+        180deg,
+        var(--color-bg) 0%,
+        rgba(243, 240, 246, 0) 100%
+    );
 }
 
 .projects-showcase::after {
-    top: 45px;
-    background: #27242c;
+    bottom: 0;
+    background: linear-gradient(
+        0deg,
+        var(--color-bg) 0%,
+        rgba(243, 240, 246, 0) 100%
+    );
 }
 
 .projects-showcase__inner {
@@ -1557,12 +1564,15 @@
 }
 
 .projects-showcase__head .section-title {
+    max-width: none;
     margin-inline: auto;
+    font-size: clamp(24px, 5vw, 72px);
+    white-space: nowrap;
 }
 
 .projects-showcase__head .section-kicker,
 .projects-showcase__head .section-copy {
-    color: rgba(255, 255, 255, 0.62);
+    color: var(--color-text-soft);
 }
 
 .projects-swiper {
@@ -1636,6 +1646,7 @@
     padding: 7px 11px;
     border-radius: 9px;
     background: var(--color-purple);
+    color: #ffffff;
     font-size: 11px;
     font-weight: 800;
 }
@@ -1648,6 +1659,7 @@
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.045em;
+    color: #ffffff;
 }
 
 .project-card__copy {
@@ -1666,13 +1678,17 @@
 }
 
 .projects-showcase .swiper-control {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(23, 21, 31, 0.18);
+    background: var(--color-dark);
     color: #ffffff;
+    box-shadow:
+        0 8px 0 rgba(23, 21, 31, 0.08),
+        var(--shadow-sm);
 }
 
 .projects-showcase .swiper-control:hover {
     background: var(--color-purple);
+    border-color: var(--color-purple);
 }
 
 
