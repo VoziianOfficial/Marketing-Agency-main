@@ -1112,6 +1112,8 @@
    ========================================================= */
 
 .how-we-work {
+    padding-top: 0;
+    padding-bottom: 0;
     background: var(--color-bg);
 }
 
@@ -2086,7 +2088,159 @@
 
 
 /* =========================================================
-   11. PRICING
+   11. TEAM
+   ========================================================= */
+
+.team-section {
+    overflow: hidden;
+}
+
+.team-section__dot {
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    box-shadow: 4px 6px 0 rgba(23, 21, 31, 0.08);
+}
+
+.team-section__dot--one {
+    top: 12%;
+    left: 4%;
+    width: 34px;
+    height: 34px;
+    background: var(--color-blue);
+}
+
+.team-section__dot--two {
+    top: 26%;
+    left: 8.5%;
+    width: 18px;
+    height: 18px;
+    background: var(--color-purple);
+}
+
+.team-section__dot--three {
+    top: 6%;
+    left: 11%;
+    width: 13px;
+    height: 13px;
+    background: var(--color-carrot);
+}
+
+.team-section__sparkle {
+    position: absolute;
+    z-index: 1;
+    right: 5%;
+    bottom: 14%;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    color: var(--color-carrot);
+    transform: rotate(-6deg);
+}
+
+.team-section__sparkle span {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.team-section__sparkle span:nth-child(2) {
+    color: var(--color-purple);
+    font-size: 17px;
+    transform: translateY(8px) rotate(10deg);
+}
+
+.team-section__sparkle span:nth-child(3) {
+    color: var(--color-blue);
+    font-size: 12px;
+    transform: translateY(13px);
+}
+
+.team-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 48px;
+    text-align: center;
+}
+
+.team-card__media {
+    position: relative;
+    width: 230px;
+    height: 230px;
+    margin: 0 auto 26px;
+}
+
+.team-card__blob {
+    position: absolute;
+    inset: 16px -14px -12px 16px;
+    border-radius: 46% 54% 52% 48% / 50% 46% 54% 50%;
+    background: var(--color-purple);
+    transform: rotate(-6deg);
+}
+
+.team-card__ring {
+    position: absolute;
+    inset: -13px;
+    border: 5px solid var(--color-carrot);
+    border-radius: 42% 58% 60% 40% / 55% 42% 58% 45%;
+    transform: rotate(5deg);
+}
+
+.team-card__frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 1px solid rgba(23, 21, 31, 0.08);
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: var(--shadow-md);
+}
+
+.team-card__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-card:nth-child(2) .team-card__blob {
+    inset: 16px 16px -12px -14px;
+    transform: rotate(6deg);
+}
+
+.team-card:nth-child(2) .team-card__ring {
+    border-radius: 58% 42% 40% 60% / 45% 58% 42% 55%;
+    transform: rotate(-6deg);
+}
+
+.team-card:nth-child(3) .team-card__blob {
+    transform: rotate(4deg);
+}
+
+.team-card:nth-child(3) .team-card__ring {
+    border-radius: 50% 50% 45% 55% / 45% 55% 50% 50%;
+    transform: rotate(-3deg);
+}
+
+.team-card__name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+}
+
+.team-card__role {
+    display: block;
+    margin-top: 4px;
+    color: var(--color-text-soft);
+    font-size: 13px;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   12. PRICING
    ========================================================= */
 
 .pricing-section {
@@ -2428,7 +2582,7 @@
 
 
 /* =========================================================
-   12. FAQ
+   13. FAQ
    ========================================================= */
 
 .faq-section {
@@ -2562,7 +2716,7 @@
 
 
 /* =========================================================
-   13. CONTACT CTA
+   14. CONTACT CTA
    ========================================================= */
 
 .contact-section {
@@ -2796,7 +2950,7 @@
 
 
 /* =========================================================
-   14. PARALLAX
+   15. PARALLAX
    ========================================================= */
 
 .parallax-media {
@@ -2815,7 +2969,7 @@
 
 
 /* =========================================================
-   15. SMALL MOTION DETAILS
+   16. SMALL MOTION DETAILS
    ========================================================= */
 
 [data-float="slow"] {
@@ -2865,7 +3019,7 @@
 
 
 /* =========================================================
-   16. LARGE DESKTOP
+   17. LARGE DESKTOP
    ========================================================= */
 
 @media (min-width: 1500px) {
@@ -2882,7 +3036,7 @@
 
 
 /* =========================================================
-   17. DESKTOP / SMALL LAPTOP
+   18. DESKTOP / SMALL LAPTOP
    ========================================================= */
 
 @media (max-width: 1240px) {
@@ -2935,7 +3089,7 @@
 
 
 /* =========================================================
-   18. TABLET
+   19. TABLET
    ========================================================= */
 
 @media (max-width: 1024px) {
@@ -3126,6 +3280,15 @@
         border-radius: 0 0 240px 0;
     }
 
+    .team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px;
+    }
+
+    .team-card:last-child {
+        grid-column: 1 / -1;
+    }
+
     .pricing-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -3152,7 +3315,7 @@
 
 
 /* =========================================================
-   19. MOBILE
+   20. MOBILE
    ========================================================= */
 
 @media (max-width: 760px) {
@@ -3460,6 +3623,29 @@
         font-size: 27px;
     }
 
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    .team-card:last-child {
+        grid-column: auto;
+    }
+
+    .team-card__media {
+        width: 190px;
+        height: 190px;
+    }
+
+    .team-section__dot--one {
+        width: 26px;
+        height: 26px;
+    }
+
+    .team-section__sparkle {
+        bottom: 6%;
+    }
+
     .pricing-grid {
         grid-template-columns: 1fr;
     }
@@ -3592,7 +3778,7 @@
 
 
 /* =========================================================
-   20. SMALL MOBILE
+   21. SMALL MOBILE
    ========================================================= */
 
 @media (max-width: 480px) {
@@ -3748,11 +3934,21 @@
     .contact-panel__title {
         font-size: 39px;
     }
+
+    .team-card__media {
+        width: 164px;
+        height: 164px;
+    }
+
+    .team-section__dot--two,
+    .team-section__dot--three {
+        display: none;
+    }
 }
 
 
 /* =========================================================
-   21. REDUCED MOTION
+   22. REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
