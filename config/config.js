@@ -115,12 +115,6 @@ window.SITE_CONFIG = Object.freeze({
         policyText: "Cookie Policy"
     },
 
-    socialLinks: {
-        instagram: "#",
-        linkedin: "#",
-        behance: "#"
-    },
-
     copyright: {
         prefix: "©",
         suffix: "Lunera. All rights reserved."

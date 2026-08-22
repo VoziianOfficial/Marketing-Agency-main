@@ -141,24 +141,6 @@ function initSiteConfig(config) {
             });
     }
 
-    /* Social links */
-
-    if (config.socialLinks) {
-        document
-            .querySelectorAll("[data-social]")
-            .forEach((link) => {
-                const platform =
-                    link.dataset.social;
-
-                const url =
-                    config.socialLinks[platform];
-
-                if (url) {
-                    link.href = url;
-                }
-            });
-    }
-
     /* Current year */
 
     const year = new Date().getFullYear();
