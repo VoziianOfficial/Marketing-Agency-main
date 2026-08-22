@@ -546,6 +546,194 @@
 
 
 /* =========================================================
+   5B. SERVICE HIGHLIGHT
+   ========================================================= */
+
+.service-highlight {
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.service-highlight .section-kicker::before {
+    background: var(--service-accent);
+}
+
+.service-highlight__grid {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+    align-items: start;
+    gap: clamp(40px, 5vw, 88px);
+}
+
+.service-highlight__visual {
+    position: relative;
+    min-height: 500px;
+}
+
+.service-highlight__frame-outline {
+    position: absolute;
+    top: 16px;
+    left: -16px;
+    width: 90%;
+    height: 94%;
+    border: 1.5px solid var(--service-accent);
+    opacity: 0.34;
+    border-radius: 200px 200px 30px 30px;
+    transform: rotate(-2deg);
+}
+
+.service-highlight__frame {
+    position: relative;
+    z-index: 1;
+    width: 88%;
+    height: 480px;
+    overflow: hidden;
+    border: 1px solid rgba(23, 21, 31, 0.1);
+    border-radius: 200px 200px 30px 30px;
+    background: var(--service-accent-soft);
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--transition-base);
+}
+
+.service-highlight__visual:hover .service-highlight__frame {
+    transform: translateY(-5px);
+}
+
+.service-highlight__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-highlight__float {
+    position: absolute;
+    left: 20px;
+    bottom: -26px;
+    z-index: 3;
+    width: min(272px, 76%);
+    padding: 22px 22px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: var(--shadow-lg);
+}
+
+.service-highlight__float-kicker {
+    color: var(--color-text-soft);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.service-highlight__float-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.service-highlight__float-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 800;
+}
+
+.service-highlight__float-tag::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: var(--service-accent);
+}
+
+.service-highlight__content {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.service-highlight__media {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    border: 1px solid rgba(23, 21, 31, 0.08);
+    border-radius: 32px;
+    box-shadow: var(--shadow-md);
+}
+
+.service-highlight__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-highlight__text {
+    max-width: 620px;
+}
+
+.service-highlight__title {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 2.8vw, 40px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+}
+
+.service-highlight__copy {
+    max-width: 520px;
+    margin-top: 14px;
+    color: var(--color-text-soft);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.service-highlight__points {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px 24px;
+    margin-top: 24px;
+}
+
+.service-highlight-point {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 13.5px;
+    font-weight: 800;
+}
+
+.service-highlight-point__icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--service-accent-soft);
+    color: var(--service-accent);
+}
+
+.service-highlight-point__icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.service-highlight__actions {
+    margin-top: 6px;
+}
+
+.service-highlight__actions .button--primary {
+    background: var(--service-accent);
+}
+
+
+/* =========================================================
    6. SERVICE PROCESS
    ========================================================= */
 
@@ -1490,6 +1678,15 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .service-highlight__grid {
+        grid-template-columns: minmax(300px, 0.86fr) minmax(0, 1.14fr);
+        gap: 48px;
+    }
+
+    .service-highlight__frame {
+        width: 92%;
+    }
+
     .service-results__shell {
         grid-template-columns: 1fr 0.9fr;
     }
@@ -1587,6 +1784,23 @@
         align-items: flex-start;
         flex-direction: column;
         gap: 18px;
+    }
+
+    .service-highlight__grid {
+        grid-template-columns: 1fr;
+        gap: 64px;
+    }
+
+    .service-highlight__visual {
+        order: 2;
+        min-height: 460px;
+        max-width: 440px;
+        margin-inline: auto;
+    }
+
+    .service-highlight__text,
+    .service-highlight__copy {
+        max-width: none;
     }
 
     .service-results__shell {
@@ -1729,6 +1943,38 @@
     .service-overview__points {
         grid-template-columns: 1fr;
         gap: 7px;
+    }
+
+    .service-highlight__visual {
+        min-height: 400px;
+        max-width: 340px;
+    }
+
+    .service-highlight__frame {
+        width: 100%;
+        height: 380px;
+        border-radius: 160px 160px 26px 26px;
+    }
+
+    .service-highlight__frame-outline {
+        width: 96%;
+        border-radius: 160px 160px 26px 26px;
+    }
+
+    .service-highlight__float {
+        left: 8px;
+        bottom: -22px;
+        padding: 18px 18px 16px;
+    }
+
+    .service-highlight__media {
+        height: 200px;
+        border-radius: 26px;
+    }
+
+    .service-highlight__points {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .deliverables-grid {
@@ -1931,6 +2177,19 @@
 
     .service-overview__secondary-media {
         height: 215px;
+    }
+
+    .service-highlight__visual {
+        min-height: 360px;
+        max-width: 100%;
+    }
+
+    .service-highlight__frame {
+        height: 340px;
+    }
+
+    .service-highlight__float {
+        width: min(240px, 82%);
     }
 
     .service-results__media {
