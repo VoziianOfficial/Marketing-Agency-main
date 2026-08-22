@@ -4337,7 +4337,7 @@
                         </div>
 
 
-                        <div class="form-field form-field--full">
+                        <div class="form-field">
 
                             <label
                                 class="form-label"
@@ -4346,44 +4346,69 @@
                                 What do you need?
                             </label>
 
-                            <select
+                            <span class="contact-form__select-wrap">
+                                <select
+                                    class="form-input"
+                                    id="contact-service"
+                                    name="service"
+                                    required
+                                >
+                                    <option value="">
+                                        Select a service
+                                    </option>
+
+                                    <option value="Digital Strategy">
+                                        Digital Strategy
+                                    </option>
+
+                                    <option value="SEO">
+                                        SEO
+                                    </option>
+
+                                    <option value="Social Media Marketing">
+                                        Social Media Marketing
+                                    </option>
+
+                                    <option value="Paid Advertising">
+                                        Paid Advertising
+                                    </option>
+
+                                    <option value="Content Marketing">
+                                        Content Marketing
+                                    </option>
+
+                                    <option value="Web Design">
+                                        Web Design
+                                    </option>
+
+                                    <option value="Integrated Marketing">
+                                        Integrated Marketing
+                                    </option>
+                                </select>
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-field">
+
+                            <label
+                                class="form-label"
+                                for="contact-zip"
+                            >
+                                ZIP code
+                            </label>
+
+                            <input
                                 class="form-input"
-                                id="contact-service"
-                                name="service"
+                                id="contact-zip"
+                                name="zip"
+                                type="text"
+                                autocomplete="postal-code"
+                                inputmode="text"
+                                pattern="[0-9A-Za-z\s-]{3,20}"
                                 required
                             >
-                                <option value="">
-                                    Select a service
-                                </option>
-
-                                <option value="Digital Strategy">
-                                    Digital Strategy
-                                </option>
-
-                                <option value="SEO">
-                                    SEO
-                                </option>
-
-                                <option value="Social Media Marketing">
-                                    Social Media Marketing
-                                </option>
-
-                                <option value="Paid Advertising">
-                                    Paid Advertising
-                                </option>
-
-                                <option value="Content Marketing">
-                                    Content Marketing
-                                </option>
-
-                                <option value="Web Design">
-                                    Web Design
-                                </option>
-
-                                <option value="Integrated Marketing">
-                                    Integrated Marketing
-                                </option>
-                            </select>
 
                         </div>
 

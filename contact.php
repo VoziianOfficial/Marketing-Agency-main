@@ -159,6 +159,10 @@ $service = isset($_POST['service'])
     ? trim((string) $_POST['service'])
     : '';
 
+$zip = isset($_POST['zip'])
+    ? trim((string) $_POST['zip'])
+    : '';
+
 $message = isset($_POST['message'])
     ? trim((string) $_POST['message'])
     : '';
@@ -170,6 +174,7 @@ $message = isset($_POST['message'])
 
 $name = strip_tags($name);
 $service = strip_tags($service);
+$zip = strip_tags($zip);
 $message = strip_tags($message);
 
 $name = preg_replace(
@@ -182,6 +187,12 @@ $service = preg_replace(
     '/[\r\n]+/',
     ' ',
     $service
+) ?? '';
+
+$zip = preg_replace(
+    '/[\r\n]+/',
+    ' ',
+    $zip
 ) ?? '';
 
 $email = str_replace(
@@ -199,6 +210,7 @@ if (
     $name === '' ||
     $email === '' ||
     $service === '' ||
+    $zip === '' ||
     $message === ''
 ) {
     sendResponse(
@@ -248,6 +260,20 @@ if (mb_strlen($service) > 120) {
     sendResponse(
         false,
         'Please select a valid service.',
+        422
+    );
+}
+
+if (
+    mb_strlen($zip) > 20 ||
+    !preg_match(
+        '/^[0-9A-Za-z][0-9A-Za-z\s-]{1,18}[0-9A-Za-z]$/',
+        $zip
+    )
+) {
+    sendResponse(
+        false,
+        'Please enter a valid ZIP code.',
         422
     );
 }
@@ -319,6 +345,13 @@ $safeService = htmlspecialchars(
     'UTF-8'
 );
 
+$safeZip = htmlspecialchars(
+    $zip,
+    ENT_QUOTES |
+    ENT_SUBSTITUTE,
+    'UTF-8'
+);
+
 $safeMessage = htmlspecialchars(
     $message,
     ENT_QUOTES |
@@ -385,6 +418,11 @@ $emailBody = <<<HTML
         <p>
             <strong>Service:</strong><br>
             {$safeService}
+        </p>
+
+        <p>
+            <strong>ZIP code:</strong><br>
+            {$safeZip}
         </p>
 
         <p>
