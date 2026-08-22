@@ -438,14 +438,14 @@
 .social-proof-bar {
     display: grid;
     grid-template-columns:
-        minmax(230px, 1.05fr)
-        minmax(220px, 0.8fr)
-        minmax(220px, 0.8fr)
-        minmax(230px, 0.9fr);
+        minmax(270px, 1.08fr)
+        minmax(220px, 0.78fr)
+        minmax(220px, 0.72fr)
+        minmax(230px, 0.78fr);
     align-items: stretch;
-    gap: 10px;
-    min-height: 172px;
-    padding: 22px;
+    gap: 12px;
+    min-height: 154px;
+    padding: 18px;
     overflow: hidden;
     border-radius: 88px;
     background: var(--color-dark);
@@ -458,25 +458,48 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 14px 22px 14px 34px;
+    padding: 12px 26px 12px 34px;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
     color: #ffffff;
 }
 
 .social-proof-bar__title {
-    max-width: 270px;
+    max-width: 310px;
     font-family: var(--font-display);
-    font-size: clamp(25px, 2.2vw, 36px);
-    font-weight: 700;
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 760;
     line-height: 1.08;
     letter-spacing: -0.045em;
 }
 
 .social-proof-bar__title strong {
+    display: block;
+    color: #ffffff;
+}
+
+.social-proof-bar__marks {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 18px;
+    line-height: 1;
+}
+
+.social-proof-bar__mark:nth-child(2) {
+    color: var(--color-purple);
+}
+
+.social-proof-bar__mark:nth-child(3) {
     color: var(--color-blue);
 }
 
 .social-proof-bar__note {
-    margin-top: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 10px;
     color: rgba(255, 255, 255, 0.53);
     font-size: 11px;
     font-weight: 700;
@@ -484,30 +507,35 @@
     text-transform: uppercase;
 }
 
-.social-proof-video {
+.social-proof-bar__note-mark {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 auto;
+    border-radius: 2px 6px 2px 6px;
+    background: var(--color-purple);
+    transform: rotate(12deg);
+}
+
+.social-proof-photo {
     position: relative;
-    min-height: 128px;
+    min-height: 118px;
     overflow: hidden;
-    border-radius: 64px 18px 18px 64px;
+    border-radius: 48px;
     background: #292630;
 }
 
-.social-proof-video img {
+.social-proof-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(0.65);
-    transition:
-        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
-        filter var(--transition-base);
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.social-proof-video:hover img {
+.social-proof-photo:hover img {
     transform: scale(1.05);
-    filter: saturate(1);
 }
 
-.social-proof-video__button {
+.social-proof-photo__play {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -515,16 +543,14 @@
     width: 58px;
     height: 58px;
     place-items: center;
-    border: 5px solid var(--color-purple);
+    border: 5px solid rgba(255, 255, 255, 0.82);
     border-radius: 50%;
-    background: #ffffff;
-    color: var(--color-dark);
+    background: var(--color-purple);
+    color: #ffffff;
+    box-shadow:
+        0 12px 24px rgba(139, 61, 245, 0.3),
+        0 0 0 8px rgba(255, 255, 255, 0.16);
     transform: translate(-50%, -50%);
-}
-
-.social-proof-video__button svg {
-    width: 17px;
-    height: 17px;
 }
 
 .social-proof-card {
@@ -532,26 +558,31 @@
     min-width: 0;
     justify-content: center;
     flex-direction: column;
-    padding: 22px 25px;
-    border-radius: 14px;
+    padding: 20px 24px;
+    border-radius: 8px;
     background: #ffffff;
 }
 
 .social-proof-card__stars {
     display: flex;
     gap: 3px;
-    margin-bottom: 12px;
+    margin-bottom: 13px;
     color: var(--color-carrot);
+    font-size: 18px;
+    line-height: 1;
 }
 
-.social-proof-card__stars svg {
-    width: 17px;
-    height: 17px;
+.social-proof-card__eyebrow {
+    margin-bottom: 13px;
+    color: var(--color-dark);
+    font-size: 13px;
+    font-weight: 850;
+    line-height: 1;
 }
 
 .social-proof-card__value {
     font-family: var(--font-display);
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 750;
     line-height: 1;
     letter-spacing: -0.04em;
@@ -561,12 +592,12 @@
     margin-top: 8px;
     color: var(--color-text-soft);
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 760;
     line-height: 1.45;
 }
 
 .social-proof-card--metric {
-    border-radius: 14px 62px 62px 14px;
+    border-radius: 8px 58px 58px 8px;
 }
 
 .social-proof-progress {
@@ -579,10 +610,14 @@
 }
 
 .social-proof-progress__bar {
-    width: 68%;
+    width: 64%;
     height: 100%;
     border-radius: inherit;
-    background: var(--color-purple);
+    background: linear-gradient(
+        90deg,
+        var(--color-purple),
+        #b979f8
+    );
 }
 
 
@@ -2315,15 +2350,26 @@
     }
 
     .social-proof-bar__intro,
-    .social-proof-video,
+    .social-proof-photo,
     .social-proof-card,
     .social-proof-card--metric {
         min-height: 130px;
-        border-radius: 24px;
     }
 
     .social-proof-bar__intro {
         padding: 22px;
+    }
+
+    .social-proof-photo {
+        border-radius: 30px;
+    }
+
+    .social-proof-card {
+        border-radius: 22px;
+    }
+
+    .social-proof-card--metric {
+        border-radius: 22px 44px 44px 22px;
     }
 
     .about-agency__grid,
@@ -2497,19 +2543,27 @@
 
     .social-proof-bar__intro {
         min-height: 108px;
-        padding: 19px 18px;
+        padding: 19px 18px 22px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .social-proof-bar__title {
         font-size: 25px;
     }
 
-    .social-proof-video {
+    .social-proof-photo {
         min-height: 180px;
+        border-radius: 26px;
     }
 
     .social-proof-card {
         min-height: 115px;
+        border-radius: 20px;
+    }
+
+    .social-proof-card--metric {
+        border-radius: 20px 40px 40px 20px;
     }
 
     .agency-marquee {
@@ -2786,7 +2840,7 @@
         width: 112px;
     }
 
-    .social-proof-video {
+    .social-proof-photo {
         min-height: 155px;
     }
 
