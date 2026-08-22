@@ -2,35 +2,94 @@
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 64 64"
 >
+    <defs>
+        <linearGradient
+            id="favicon-bg"
+            x1="8"
+            y1="8"
+            x2="56"
+            y2="56"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop
+                offset="0"
+                stop-color="#211D2C"
+            />
+            <stop
+                offset="1"
+                stop-color="#17151F"
+            />
+        </linearGradient>
+
+        <linearGradient
+            id="favicon-planet"
+            x1="20"
+            y1="14"
+            x2="44"
+            y2="52"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop
+                offset="0"
+                stop-color="#F4E4FF"
+            />
+            <stop
+                offset="1"
+                stop-color="#EFDDF8"
+            />
+        </linearGradient>
+
+        <linearGradient
+            id="favicon-ring"
+            x1="8"
+            y1="42"
+            x2="56"
+            y2="22"
+            gradientUnits="userSpaceOnUse"
+        >
+            <stop
+                offset="0"
+                stop-color="#A15CFF"
+            />
+            <stop
+                offset="1"
+                stop-color="#B979F8"
+            />
+        </linearGradient>
+    </defs>
+
     <rect
         x="4"
         y="4"
         width="56"
         height="56"
-        rx="18"
-        fill="#17151F"
+        rx="17"
+        fill="url(#favicon-bg)"
+    />
+
+    <ellipse
+        cx="32"
+        cy="32"
+        rx="23"
+        ry="9"
+        fill="none"
+        stroke="url(#favicon-ring)"
+        stroke-width="7"
+        transform="rotate(-18 32 32)"
+    />
+
+    <circle
+        cx="32"
+        cy="32"
+        r="20"
+        fill="url(#favicon-planet)"
     />
 
     <path
-        d="M20 16V36C20 44 24.5 48 32.5 48H46"
+        d="M12 38C23 45 42 42 52 29"
         fill="none"
-        stroke="#8B3DF5"
-        stroke-width="9"
+        stroke="url(#favicon-ring)"
+        stroke-width="7"
         stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-
-    <circle
-        cx="20"
-        cy="16"
-        r="4.5"
-        fill="#42C7F4"
-    />
-
-    <circle
-        cx="46"
-        cy="48"
-        r="4.5"
-        fill="#FF682B"
     />
 </svg>
