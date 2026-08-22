@@ -3059,27 +3059,31 @@
     }
 
     .agency-excellence__backplate {
-        left: 10px;
-        width: 62%;
-        height: 340px;
+        top: 52px;
+        left: 3%;
+        width: 43%;
+        height: 285px;
     }
 
     .agency-excellence__outline {
-        bottom: 10px;
-        width: 48%;
-        height: 210px;
+        top: 0;
+        right: 4%;
+        width: 43%;
+        height: 340px;
     }
 
     .agency-excellence__media--primary {
+        top: 82px;
         left: 0;
-        width: 62%;
-        height: 360px;
+        width: 43%;
+        height: 285px;
     }
 
     .agency-excellence__media--secondary {
-        width: 48%;
-        height: 225px;
-        border-width: 6px;
+        top: 0;
+        right: 4%;
+        width: 43%;
+        height: 340px;
     }
 
     .agency-excellence__features {
@@ -3282,19 +3286,21 @@
     }
 
     .agency-excellence__backplate {
-        height: 280px;
+        top: 46px;
+        height: 235px;
     }
 
     .agency-excellence__outline {
-        height: 175px;
+        height: 285px;
     }
 
     .agency-excellence__media--primary {
-        height: 300px;
+        top: 72px;
+        height: 235px;
     }
 
     .agency-excellence__media--secondary {
-        height: 185px;
+        height: 285px;
     }
 
     .agency-excellence__features {
