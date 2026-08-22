@@ -959,7 +959,7 @@
     flex: 1;
     min-height: 140px;
     margin-top: 20px;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid rgba(23, 21, 31, 0.08);
     border-radius: 20px;
     background: var(--service-accent-soft);
@@ -968,6 +968,7 @@
 .process-card__media img {
     width: 100%;
     height: 100%;
+    border-radius: inherit;
     object-fit: cover;
 }
 

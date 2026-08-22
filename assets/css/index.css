@@ -694,6 +694,7 @@
 .services-showcase {
     padding-top: clamp(82px, 7vw, 112px);
     padding-bottom: clamp(84px, 7vw, 116px);
+    background: var(--color-bg);
 }
 
 .services-showcase__head {
@@ -970,7 +971,7 @@
 
 .about-agency {
     overflow: hidden;
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .about-agency__grid {
@@ -1109,7 +1110,7 @@
    ========================================================= */
 
 .how-we-work {
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .how-we-work__head {
@@ -1326,7 +1327,7 @@
    ========================================================= */
 
 .capabilities {
-    background: #f1eef7;
+    background: var(--color-bg);
 }
 
 .capabilities__grid {
@@ -1652,7 +1653,7 @@
    ========================================================= */
 
 .story-stats {
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .story-stats__shell {
@@ -1769,7 +1770,7 @@
    ========================================================= */
 
 .services-spotlight {
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .services-spotlight__head {
@@ -1971,7 +1972,7 @@
    ========================================================= */
 
 .testimonials-section {
-    background: #f2eef7;
+    background: var(--color-bg);
 }
 
 .testimonials-section__grid {
@@ -2087,7 +2088,7 @@
    ========================================================= */
 
 .pricing-section {
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .pricing-section__head {
@@ -2429,7 +2430,7 @@
    ========================================================= */
 
 .faq-section {
-    background: #f3f0f6;
+    background: var(--color-bg);
 }
 
 .faq-section__grid {
@@ -2562,7 +2563,7 @@
 
 .contact-section {
     overflow: hidden;
-    background: #ffffff;
+    background: var(--color-bg);
 }
 
 .contact-stage {
