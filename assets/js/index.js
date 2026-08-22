@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initHomeSwipers();
     initHomeFAQ();
+    initServicesSpotlight();
 
     initHomeParallax();
     initCounters();
@@ -1349,4 +1350,81 @@ function formatCounterValue(
         ) +
         suffix
     );
+}
+
+
+/* =========================================================
+   11. SERVICES SPOTLIGHT
+   ========================================================= */
+
+function initServicesSpotlight() {
+    const section =
+        document.querySelector(
+            ".services-spotlight"
+        );
+
+    if (!section) {
+        return;
+    }
+
+    const items =
+        section.querySelectorAll(
+            ".services-spotlight__item"
+        );
+
+    const panels =
+        section.querySelectorAll(
+            ".services-spotlight__panel"
+        );
+
+    if (!items.length || !panels.length) {
+        return;
+    }
+
+    const canHover =
+        window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        ).matches;
+
+    const setActiveService = (service) => {
+        items.forEach((item) => {
+            const isActive =
+                item.dataset.service === service;
+
+            item.classList.toggle(
+                "is-active",
+                isActive
+            );
+
+            item.setAttribute(
+                "aria-pressed",
+                isActive ? "true" : "false"
+            );
+        });
+
+        panels.forEach((panel) => {
+            panel.classList.toggle(
+                "is-active",
+                panel.dataset.service === service
+            );
+        });
+    };
+
+    items.forEach((item) => {
+        item.addEventListener(
+            "click",
+            () => {
+                setActiveService(item.dataset.service);
+            }
+        );
+
+        if (canHover) {
+            item.addEventListener(
+                "mouseenter",
+                () => {
+                    setActiveService(item.dataset.service);
+                }
+            );
+        }
+    });
 }
