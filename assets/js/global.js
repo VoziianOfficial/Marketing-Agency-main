@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCookies(CONFIG);
     initForms(CONFIG);
     initNavigation();
+    initServicesDropdown();
     initAOS();
 });
 
@@ -1308,7 +1309,254 @@ function initHomeSectionNavigation() {
 
 
 /* =========================================================
-   8. AOS
+   8. HEADER SERVICES DROPDOWN
+   ========================================================= */
+
+function initServicesDropdown() {
+    const wrapper =
+        document.querySelector(".nav-services");
+
+    if (!wrapper) {
+        return;
+    }
+
+    const trigger =
+        wrapper.querySelector(
+            ".nav-services__trigger"
+        );
+
+    const panel =
+        wrapper.querySelector(
+            ".nav-services__panel"
+        );
+
+    if (!trigger || !panel) {
+        return;
+    }
+
+    const items =
+        Array.from(
+            panel.querySelectorAll(
+                ".nav-services__item"
+            )
+        );
+
+    const hoverQuery =
+        window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        );
+
+    const currentFile =
+        window.location.pathname
+            .split("/")
+            .pop() || "index.html";
+
+    items.forEach((item) => {
+        if (
+            item.getAttribute("href") ===
+            currentFile
+        ) {
+            item.classList.add("is-current");
+
+            item.setAttribute(
+                "aria-current",
+                "page"
+            );
+        }
+    });
+
+    let isOpen = false;
+    let wasOpenBeforeInteraction = false;
+
+    const openDropdown = () => {
+        if (isOpen) {
+            return;
+        }
+
+        isOpen = true;
+
+        wrapper.classList.add("is-open");
+
+        trigger.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+    };
+
+    const closeDropdown = ({
+        restoreFocus = false
+    } = {}) => {
+        if (!isOpen) {
+            return;
+        }
+
+        isOpen = false;
+
+        wrapper.classList.remove("is-open");
+
+        trigger.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        if (restoreFocus) {
+            trigger.focus();
+        }
+    };
+
+    trigger.addEventListener(
+        "pointerdown",
+        () => {
+            /*
+               Captured before the browser shifts focus to the
+               button (which happens on mousedown and already
+               opens the panel via "focusin"). Without this
+               snapshot, "click" would always see an
+               already-open panel and immediately close it.
+            */
+
+            wasOpenBeforeInteraction = isOpen;
+        }
+    );
+
+    trigger.addEventListener(
+        "click",
+        () => {
+            /*
+               On hover-capable pointers, "mouseenter" already
+               manages the open state, so a click here should
+               only ever open (never surprise-close on click).
+            */
+
+            if (hoverQuery.matches) {
+                openDropdown();
+                return;
+            }
+
+            if (wasOpenBeforeInteraction) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+    );
+
+    wrapper.addEventListener(
+        "mouseenter",
+        () => {
+            if (hoverQuery.matches) {
+                openDropdown();
+            }
+        }
+    );
+
+    wrapper.addEventListener(
+        "mouseleave",
+        () => {
+            if (hoverQuery.matches) {
+                closeDropdown();
+            }
+        }
+    );
+
+    wrapper.addEventListener(
+        "focusin",
+        () => {
+            openDropdown();
+        }
+    );
+
+    wrapper.addEventListener(
+        "focusout",
+        (event) => {
+            if (
+                !wrapper.contains(
+                    event.relatedTarget
+                )
+            ) {
+                closeDropdown();
+            }
+        }
+    );
+
+    wrapper.addEventListener(
+        "keydown",
+        (event) => {
+            if (event.key === "Escape") {
+                if (isOpen) {
+                    event.preventDefault();
+
+                    closeDropdown({
+                        restoreFocus: true
+                    });
+                }
+
+                return;
+            }
+
+            const isArrowDown =
+                event.key === "ArrowDown";
+
+            const isArrowUp =
+                event.key === "ArrowUp";
+
+            if (
+                !isArrowDown &&
+                !isArrowUp ||
+                !items.length
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if (!isOpen) {
+                openDropdown();
+                items[0].focus();
+                return;
+            }
+
+            const focusedIndex =
+                items.indexOf(
+                    document.activeElement
+                );
+
+            let nextIndex = 0;
+
+            if (focusedIndex === -1) {
+                nextIndex = 0;
+            } else if (isArrowDown) {
+                nextIndex =
+                    (focusedIndex + 1) %
+                    items.length;
+            } else {
+                nextIndex =
+                    (focusedIndex -
+                        1 +
+                        items.length) %
+                    items.length;
+            }
+
+            items[nextIndex].focus();
+        }
+    );
+
+    document.addEventListener(
+        "click",
+        (event) => {
+            if (
+                isOpen &&
+                !wrapper.contains(event.target)
+            ) {
+                closeDropdown();
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   9. AOS
    ========================================================= */
 
 function initAOS() {
