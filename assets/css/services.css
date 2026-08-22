@@ -454,7 +454,7 @@
     width: 77%;
     height: 510px;
     overflow: hidden;
-    border-radius: 190px 190px 28px 28px;
+    border-radius: 28px;
     background: #ded9e2;
     box-shadow:
         15px 16px 0 var(--service-accent-soft),
@@ -696,7 +696,7 @@
     height: 94%;
     border: 1.5px solid var(--service-accent);
     opacity: 0.34;
-    border-radius: 200px 200px 30px 30px;
+    border-radius: 28px;
     transform: rotate(-2deg);
 }
 
@@ -707,7 +707,7 @@
     height: 480px;
     overflow: hidden;
     border: 1px solid rgba(23, 21, 31, 0.1);
-    border-radius: 200px 200px 30px 30px;
+    border-radius: 28px;
     background: var(--service-accent-soft);
     box-shadow: var(--shadow-lg);
     transition: transform var(--transition-base);
@@ -1792,6 +1792,10 @@
     background: var(--service-accent-soft);
 }
 
+.service-testimonial__content {
+    min-width: 0;
+}
+
 .service-testimonial__media {
     position: relative;
     min-height: 410px;
@@ -1826,6 +1830,14 @@
     font-weight: 620;
     line-height: 1.18;
     letter-spacing: -0.04em;
+}
+
+.service-testimonial__swiper {
+    width: 100%;
+}
+
+.service-testimonial__slide {
+    height: auto;
 }
 
 .service-testimonial__quote::before {
@@ -2754,7 +2766,7 @@
     .service-overview__main-media {
         width: 76%;
         height: 420px;
-        border-radius: 160px 160px 25px 25px;
+        border-radius: 28px;
     }
 
     .service-overview__secondary-media {
@@ -2776,12 +2788,12 @@
     .service-highlight__frame {
         width: 100%;
         height: 380px;
-        border-radius: 160px 160px 26px 26px;
+        border-radius: 28px;
     }
 
     .service-highlight__frame-outline {
         width: 96%;
-        border-radius: 160px 160px 26px 26px;
+        border-radius: 28px;
     }
 
     .service-highlight__float {

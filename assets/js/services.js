@@ -8,6 +8,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     initServiceHero();
     initProcessSwiper();
+    initServiceTestimonials();
     initServiceFAQ();
     initServiceParallax();
     initServiceCounters();
@@ -402,7 +403,296 @@ function updateProcessSlides(swiper) {
 
 
 /* =========================================================
-   4. SERVICE FAQ
+   4. SERVICE TESTIMONIAL SWIPER
+   ========================================================= */
+
+const serviceTestimonialSlides = {
+    strategy: [
+        {
+            quote:
+                "Clear strategy helped the team decide what mattered first and what could wait.",
+            name: "Maya Collins",
+            role: "Strategy client"
+        },
+        {
+            quote:
+                "The work felt practical because every recommendation connected to a real next step.",
+            name: "Daniel Reed",
+            role: "Growth partner"
+        }
+    ],
+
+    seo: [
+        {
+            quote:
+                "The search plan made technical fixes and content priorities much easier to understand.",
+            name: "Olivia Grant",
+            role: "SEO client"
+        },
+        {
+            quote:
+                "We finally had a search system that felt useful for people, not just algorithms.",
+            name: "Noah Brooks",
+            role: "Growth partner"
+        }
+    ],
+
+    social: [
+        {
+            quote:
+                "The content started feeling more consistent without losing the brand's personality.",
+            name: "Sofia Bennett",
+            role: "Social client"
+        },
+        {
+            quote:
+                "Planning became calmer because every post had a clearer role in the wider story.",
+            name: "Ethan Price",
+            role: "Brand partner"
+        }
+    ],
+
+    advertising: [
+        {
+            quote:
+                "Campaign choices became sharper when creative, media and landing pages worked together.",
+            name: "Lena Morris",
+            role: "Advertising client"
+        },
+        {
+            quote:
+                "Testing felt structured instead of reactive, and the signals were easier to read.",
+            name: "Marcus Hale",
+            role: "Performance partner"
+        }
+    ],
+
+    content: [
+        {
+            quote:
+                "The content system gave every idea a purpose instead of just filling a calendar.",
+            name: "Nina Foster",
+            role: "Content client"
+        },
+        {
+            quote:
+                "We found a publishing rhythm that felt useful for the audience and manageable for us.",
+            name: "Leo Harris",
+            role: "Editorial partner"
+        }
+    ],
+
+    web: [
+        {
+            quote:
+                "The site became easier to understand without losing the character of the brand.",
+            name: "Grace Miller",
+            role: "Web design client"
+        },
+        {
+            quote:
+                "Every page felt more intentional, from the first screen to the smaller conversion details.",
+            name: "Jonah Wells",
+            role: "Design partner"
+        }
+    ]
+};
+
+
+function initServiceTestimonials() {
+    const shells =
+        document.querySelectorAll(
+            ".service-testimonial__shell"
+        );
+
+    if (
+        !shells.length ||
+        !window.Swiper
+    ) {
+        return;
+    }
+
+    shells.forEach((shell) => {
+        const content =
+            Array.from(shell.children).find(
+                (element) =>
+                    !element.classList.contains(
+                        "service-testimonial__media"
+                    )
+            );
+
+        if (
+            !content ||
+            content.classList.contains(
+                "service-testimonial__content"
+            )
+        ) {
+            return;
+        }
+
+        const slides =
+            [
+                readServiceTestimonial(content),
+                ...getServiceTestimonialSet()
+            ].slice(0, 3);
+
+        buildServiceTestimonialSwiper(
+            content,
+            slides
+        );
+    });
+}
+
+
+function getServiceTestimonialSet() {
+    const classList =
+        document.body.classList;
+
+    if (classList.contains("service-page--seo")) {
+        return serviceTestimonialSlides.seo;
+    }
+
+    if (classList.contains("service-page--social")) {
+        return serviceTestimonialSlides.social;
+    }
+
+    if (classList.contains("service-page--advertising")) {
+        return serviceTestimonialSlides.advertising;
+    }
+
+    if (classList.contains("service-page--content")) {
+        return serviceTestimonialSlides.content;
+    }
+
+    if (classList.contains("service-page--web")) {
+        return serviceTestimonialSlides.web;
+    }
+
+    return serviceTestimonialSlides.strategy;
+}
+
+
+function readServiceTestimonial(content) {
+    return {
+        quote:
+            content
+                .querySelector(
+                    ".service-testimonial__quote"
+                )
+                ?.textContent.trim() || "",
+        name:
+            content
+                .querySelector(
+                    ".service-testimonial__name"
+                )
+                ?.textContent.trim() ||
+            "Lunera approach",
+        role:
+            content
+                .querySelector(
+                    ".service-testimonial__role"
+                )
+                ?.textContent.trim() ||
+            "Service principle"
+    };
+}
+
+
+function buildServiceTestimonialSwiper(
+    content,
+    slides
+) {
+    content.className =
+        "service-testimonial__content";
+    content.textContent = "";
+
+    const swiperElement =
+        document.createElement("div");
+    swiperElement.className =
+        "service-testimonial__swiper swiper";
+
+    const wrapper =
+        document.createElement("div");
+    wrapper.className =
+        "swiper-wrapper";
+
+    slides.forEach((slide) => {
+        wrapper.appendChild(
+            createServiceTestimonialSlide(slide)
+        );
+    });
+
+    swiperElement.appendChild(wrapper);
+    content.appendChild(swiperElement);
+
+    const reduceMotion =
+        serviceReducedMotion();
+
+    new window.Swiper(swiperElement, {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        speed: reduceMotion
+            ? 0
+            : 650,
+        allowTouchMove: true,
+        grabCursor: true,
+        watchOverflow: false,
+        updateOnWindowResize: true,
+        resizeObserver: true,
+        autoplay: reduceMotion
+            ? false
+            : {
+                delay: 3600,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true
+        }
+    });
+}
+
+
+function createServiceTestimonialSlide(slide) {
+    const element =
+        document.createElement("article");
+    element.className =
+        "service-testimonial__slide swiper-slide";
+
+    const quote =
+        document.createElement("p");
+    quote.className =
+        "service-testimonial__quote";
+    quote.textContent = slide.quote;
+
+    const author =
+        document.createElement("div");
+    author.className =
+        "service-testimonial__author";
+
+    const name =
+        document.createElement("strong");
+    name.className =
+        "service-testimonial__name";
+    name.textContent = slide.name;
+
+    const role =
+        document.createElement("span");
+    role.className =
+        "service-testimonial__role";
+    role.textContent = slide.role;
+
+    author.append(name, role);
+    element.append(quote, author);
+
+    return element;
+}
+
+
+/* =========================================================
+   5. SERVICE FAQ
    ========================================================= */
 
 function initServiceFAQ() {
