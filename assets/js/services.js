@@ -616,9 +616,13 @@ function buildServiceTestimonialSwiper(
     wrapper.className =
         "swiper-wrapper";
 
-    slides.forEach((slide) => {
+    slides.forEach((slide, slideIndex) => {
         wrapper.appendChild(
-            createServiceTestimonialSlide(slide)
+            createServiceTestimonialSlide(
+                slide,
+                slideIndex,
+                slides.length
+            )
         );
     });
 
@@ -628,34 +632,69 @@ function buildServiceTestimonialSwiper(
     const reduceMotion =
         serviceReducedMotion();
 
-    new window.Swiper(swiperElement, {
-        slidesPerView: 1,
-        spaceBetween: 0,
-        loop: true,
-        speed: reduceMotion
-            ? 0
-            : 650,
-        allowTouchMove: true,
-        grabCursor: true,
-        watchOverflow: false,
-        updateOnWindowResize: true,
-        resizeObserver: true,
-        autoplay: reduceMotion
-            ? false
-            : {
-                delay: 3600,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true
+    const swiper =
+        new window.Swiper(swiperElement, {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: true,
+            speed: reduceMotion
+                ? 0
+                : 650,
+            allowTouchMove: true,
+            grabCursor: true,
+            watchOverflow: false,
+            updateOnWindowResize: true,
+            resizeObserver: true,
+            autoplay: reduceMotion
+                ? false
+                : {
+                    delay: 3600,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                },
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true
             },
-        keyboard: {
-            enabled: true,
-            onlyInViewport: true
+            on: {
+                init() {
+                    updateServiceTestimonialDots(this);
+                },
+
+                slideChange() {
+                    updateServiceTestimonialDots(this);
+                }
+            }
+        });
+
+    swiperElement.addEventListener(
+        "click",
+        (event) => {
+            const dot =
+                event.target.closest(
+                    ".service-testimonial__dot"
+                );
+
+            if (
+                !dot ||
+                !swiperElement.contains(dot)
+            ) {
+                return;
+            }
+
+            swiper.slideToLoop(
+                Number(dot.dataset.slideIndex)
+            );
         }
-    });
+    );
 }
 
 
-function createServiceTestimonialSlide(slide) {
+function createServiceTestimonialSlide(
+    slide,
+    activeIndex,
+    totalSlides
+) {
     const element =
         document.createElement("article");
     element.className =
@@ -684,10 +723,75 @@ function createServiceTestimonialSlide(slide) {
         "service-testimonial__role";
     role.textContent = slide.role;
 
-    author.append(name, role);
+    const dots =
+        createServiceTestimonialDots(
+            totalSlides,
+            activeIndex
+        );
+
+    author.append(name, role, dots);
     element.append(quote, author);
 
     return element;
+}
+
+
+function createServiceTestimonialDots(
+    totalSlides,
+    activeIndex
+) {
+    const dots =
+        document.createElement("div");
+    dots.className =
+        "service-testimonial__dots";
+    dots.setAttribute(
+        "aria-label",
+        "Testimonial slides"
+    );
+
+    Array.from({
+        length: totalSlides
+    }).forEach((_, index) => {
+        const dot =
+            document.createElement("button");
+        dot.className =
+            "service-testimonial__dot";
+        dot.type = "button";
+        dot.dataset.slideIndex =
+            String(index);
+        dot.setAttribute(
+            "aria-label",
+            `Show testimonial ${index + 1}`
+        );
+        dot.setAttribute(
+            "aria-current",
+            String(index === activeIndex)
+        );
+        dots.appendChild(dot);
+    });
+
+    return dots;
+}
+
+
+function updateServiceTestimonialDots(swiper) {
+    if (!swiper?.el) {
+        return;
+    }
+
+    swiper.el
+        .querySelectorAll(
+            ".service-testimonial__dot"
+        )
+        .forEach((dot) => {
+            dot.setAttribute(
+                "aria-current",
+                String(
+                    Number(dot.dataset.slideIndex) ===
+                    swiper.realIndex
+                )
+            );
+        });
 }
 
 

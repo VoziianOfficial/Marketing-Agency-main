@@ -242,6 +242,11 @@ function initMenu() {
             ".menu-panel__search-input"
         );
 
+    const menuSearchIcon =
+        menu.querySelector(
+            ".menu-panel__search-icon"
+        );
+
     let previousFocus = null;
 
     const getFocusableElements = () => {
@@ -417,6 +422,26 @@ function initMenu() {
     */
 
     if (menuSearch) {
+        const openMenuSearch = () => {
+            const query =
+                menuSearch.value.trim();
+
+            closeMenu({
+                restoreFocus: false
+            });
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "lunera:open-search",
+                    {
+                        detail: {
+                            query
+                        }
+                    }
+                )
+            );
+        };
+
         menuSearch.addEventListener(
             "keydown",
             (event) => {
@@ -428,24 +453,13 @@ function initMenu() {
 
                 event.preventDefault();
 
-                const query =
-                    menuSearch.value.trim();
-
-                closeMenu({
-                    restoreFocus: false
-                });
-
-                document.dispatchEvent(
-                    new CustomEvent(
-                        "lunera:open-search",
-                        {
-                            detail: {
-                                query
-                            }
-                        }
-                    )
-                );
+                openMenuSearch();
             }
+        );
+
+        menuSearchIcon?.addEventListener(
+            "click",
+            openMenuSearch
         );
     }
 }
@@ -718,7 +732,7 @@ function buildSearchIndex(config) {
             type: "Section",
             url: "index.html#services",
             keywords:
-                "services marketing seo advertising social content web strategy"
+                "services service marketing seo advertising ads paid social content web website design strategy"
         },
         {
             title: "Contact",
@@ -726,7 +740,51 @@ function buildSearchIndex(config) {
             url: "index.html#contact",
             keywords:
                 "contact email project brief message"
-        },
+        }
+    ];
+
+    const serviceKeywords = {
+        "digital-strategy.html":
+            "digital strategy brand strategy marketing plan positioning audience research growth roadmap consulting",
+        "seo.html":
+            "seo search organic traffic keywords rankings google visibility technical seo content search engine optimization",
+        "social-media-marketing.html":
+            "social media marketing smm instagram facebook linkedin tiktok community content audience engagement",
+        "paid-advertising.html":
+            "paid advertising ads ppc paid search google ads meta ads campaigns performance media buying conversion",
+        "content-marketing.html":
+            "content marketing copywriting articles blog storytelling editorial brand content social search sales",
+        "web-design.html":
+            "web design website design site landing page ux ui digital experience responsive conversion"
+    };
+
+    services.forEach((service) => {
+        if (
+            !service?.name ||
+            !service?.slug
+        ) {
+            return;
+        }
+
+        index.push({
+            title: service.name,
+            type: "Service",
+            url: service.slug,
+            keywords:
+                [
+                    brand,
+                    "service",
+                    "services",
+                    "marketing",
+                    service.name,
+                    serviceKeywords[service.slug] || ""
+                ]
+                    .join(" ")
+                    .toLowerCase()
+        });
+    });
+
+    index.push(
         {
             title: "Privacy Policy",
             type: "Legal",
@@ -748,25 +806,7 @@ function buildSearchIndex(config) {
             keywords:
                 "cookies cookie policy preferences"
         }
-    ];
-
-    services.forEach((service) => {
-        if (
-            !service?.name ||
-            !service?.slug
-        ) {
-            return;
-        }
-
-        index.push({
-            title: service.name,
-            type: "Service",
-            url: service.slug,
-            keywords:
-                `${brand} marketing ${service.name}`
-                    .toLowerCase()
-        });
-    });
+    );
 
     return index;
 }
@@ -786,6 +826,11 @@ function renderSearchResults(
     const normalizedQuery =
         query.trim().toLowerCase();
 
+    const queryTokens =
+        normalizedQuery
+            .split(/\s+/)
+            .filter(Boolean);
+
     const matches =
         normalizedQuery.length === 0
             ? searchIndex.slice(0, 6)
@@ -799,8 +844,8 @@ function renderSearchResults(
                         .join(" ")
                         .toLowerCase();
 
-                    return haystack.includes(
-                        normalizedQuery
+                    return queryTokens.every(
+                        (token) => haystack.includes(token)
                     );
                 })
                 .slice(0, 8);

@@ -789,7 +789,8 @@ textarea {
     bottom: 17px;
     width: 20px;
     height: 20px;
-    pointer-events: none;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .menu-panel__nav {
@@ -896,7 +897,7 @@ textarea {
     display: grid;
     visibility: hidden;
     place-items: start center;
-    padding: 12vh var(--container-padding) 40px;
+    padding: min(12vh, 92px) var(--container-padding) 32px;
     background: rgba(12, 11, 16, 0.86);
     backdrop-filter: blur(12px);
     opacity: 0;
@@ -913,14 +914,32 @@ textarea {
 }
 
 .search-modal__panel {
-    width: min(760px, 100%);
-    padding: clamp(26px, 4vw, 44px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 30px;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(18px) scale(0.98);
+    position: relative;
+    width: min(560px, 100%);
+    max-height: min(560px, 78vh);
+    overflow: hidden;
+    padding: clamp(18px, 3vw, 24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow:
+        0 18px 0 rgba(255, 255, 255, 0.08),
+        0 30px 70px rgba(12, 11, 16, 0.28);
+    transform: translateY(12px) scale(0.98);
     transition: transform var(--transition-base);
+}
+
+.search-modal__panel::before {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 5px;
+    margin-bottom: 14px;
+    border-radius: var(--radius-pill);
+    background: var(--color-purple);
+    box-shadow:
+        64px 0 0 var(--color-blue),
+        128px 0 0 var(--color-carrot);
 }
 
 .search-modal.is-open .search-modal__panel {
@@ -931,25 +950,26 @@ textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 26px;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .search-modal__title {
     font-family: var(--font-display);
-    font-size: clamp(26px, 3vw, 38px);
+    font-size: clamp(24px, 2.4vw, 31px);
     font-weight: 700;
-    letter-spacing: -0.04em;
+    line-height: 1;
+    letter-spacing: 0;
 }
 
 .search-modal__close {
     display: grid;
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     place-items: center;
-    border: 1px solid var(--color-border);
+    border: 1px solid rgba(23, 21, 31, 0.1);
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--color-surface-soft);
     cursor: pointer;
 }
 
@@ -961,12 +981,12 @@ textarea {
 .search-modal__field {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 58px;
-    padding: 0 18px;
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    background: #ffffff;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid rgba(23, 21, 31, 0.1);
+    border-radius: 14px;
+    background: #fbfafc;
 }
 
 .search-modal__field:focus-within {
@@ -975,9 +995,9 @@ textarea {
 }
 
 .search-modal__field svg {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
 }
 
 .search-modal__input {
@@ -990,16 +1010,16 @@ textarea {
 
 .search-results {
     display: grid;
-    max-height: min(430px, 48vh);
-    margin-top: 18px;
-    gap: 8px;
+    max-height: min(300px, 38vh);
+    margin-top: 12px;
+    gap: 6px;
     overflow-y: auto;
 }
 
 .search-result {
     display: block;
-    padding: 15px 16px;
-    border-radius: 14px;
+    padding: 11px 13px;
+    border-radius: 12px;
     transition:
         background-color var(--transition-fast),
         transform var(--transition-base);
@@ -1017,9 +1037,9 @@ textarea {
 
 .search-result__type {
     display: block;
-    margin-top: 3px;
+    margin-top: 2px;
     color: var(--color-text-soft);
-    font-size: 13px;
+    font-size: 11px;
 }
 
 
@@ -1433,8 +1453,16 @@ textarea {
     }
 
     .section-title {
+        margin-inline: auto;
         font-size: clamp(34px, 11vw, 50px);
         line-height: 1;
+        text-align: center;
+    }
+
+    main h1,
+    main h2 {
+        margin-inline: auto;
+        text-align: center;
     }
 
     .section-copy {
@@ -1528,12 +1556,33 @@ textarea {
     }
 
     .search-modal {
-        padding-top: 78px;
+        padding-top: 72px;
     }
 
     .search-modal__panel {
-        padding: 22px;
-        border-radius: 23px;
+        max-height: min(520px, 82vh);
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .search-modal__panel::before {
+        width: 42px;
+        margin-bottom: 12px;
+        box-shadow:
+            50px 0 0 var(--color-blue),
+            100px 0 0 var(--color-carrot);
+    }
+
+    .search-modal__header {
+        margin-bottom: 13px;
+    }
+
+    .search-modal__field {
+        min-height: 45px;
+    }
+
+    .search-results {
+        max-height: min(270px, 36vh);
     }
 
     .cookie-card {

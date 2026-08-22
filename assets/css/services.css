@@ -12,8 +12,15 @@
     --service-accent: var(--color-purple);
     --service-accent-soft: #eee5fc;
     --service-secondary: var(--color-carrot);
+    --section-feather-light: rgba(255, 255, 255, 0.86);
 
     position: relative;
+}
+
+.service-page .section {
+    box-shadow:
+        inset 0 74px 76px -78px var(--section-feather-light),
+        inset 0 -74px 76px -78px var(--section-feather-light);
 }
 
 .service-page--strategy {
@@ -180,76 +187,92 @@
 .service-hero__float {
     position: absolute;
     z-index: 6;
-    border: 1px solid var(--color-border);
-    background: #ffffff;
+    border: 1px solid rgba(23, 21, 31, 0.08);
+    background: rgba(255, 255, 255, 0.94);
     box-shadow:
-        0 8px 0 rgba(23, 21, 31, 0.05),
-        var(--shadow-md);
+        0 8px 18px rgba(23, 21, 31, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    backdrop-filter: blur(12px);
 }
 
 .service-hero__float--metric {
-    top: 68px;
-    left: 0;
-    width: 176px;
-    padding: 18px;
-    border-radius: 21px;
-    transform: rotate(-3deg);
+    top: 76px;
+    left: 8px;
+    width: 148px;
+    padding: 12px 14px;
+    border-radius: 17px;
+}
+
+.service-hero__float--metric::before {
+    content: "";
+    display: block;
+    width: 34px;
+    height: 4px;
+    margin-bottom: 9px;
+    border-radius: var(--radius-pill);
+    background: var(--service-accent);
+    box-shadow: 42px 0 0 var(--service-secondary);
 }
 
 .service-hero__float-value {
     display: block;
     font-family: var(--font-display);
-    font-size: 34px;
+    font-size: 25px;
     font-weight: 750;
     line-height: 1;
-    letter-spacing: -0.05em;
+    letter-spacing: 0;
 }
 
 .service-hero__float-label {
     display: block;
-    margin-top: 7px;
+    margin-top: 5px;
     color: var(--color-text-soft);
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.28;
 }
 
 .service-hero__float--feature {
-    right: 0;
-    bottom: 57px;
-    width: 210px;
-    padding: 17px;
-    border-radius: 22px;
+    right: 8px;
+    bottom: 70px;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 10px;
+    width: 188px;
+    padding: 12px;
+    border-radius: 18px;
 }
 
 .service-hero__float-icon {
     display: grid;
-    width: 43px;
-    height: 43px;
+    width: 34px;
+    height: 34px;
     place-items: center;
-    border-radius: 50%;
+    grid-row: span 2;
+    border-radius: 12px;
     background: var(--service-accent-soft);
     color: var(--service-accent);
 }
 
 .service-hero__float-icon svg {
-    width: 19px;
-    height: 19px;
+    width: 16px;
+    height: 16px;
 }
 
 .service-hero__float-title {
     display: block;
-    margin-top: 13px;
-    font-size: 13px;
+    margin-top: 1px;
+    font-size: 11.5px;
     font-weight: 800;
+    line-height: 1.05;
 }
 
 .service-hero__float-copy {
     display: block;
-    margin-top: 5px;
+    margin-top: 4px;
     color: var(--color-text-soft);
-    font-size: 10px;
-    line-height: 1.5;
+    font-size: 9px;
+    line-height: 1.32;
 }
 
 .service-hero__accent {
@@ -857,6 +880,7 @@
 
 .service-process {
     overflow: hidden;
+    padding-block: clamp(38px, 3.5vw, 59px);
     background: var(--color-bg);
 }
 
@@ -1356,6 +1380,7 @@
    ========================================================= */
 
 .service-results {
+    padding-block: clamp(38px, 3.5vw, 59px);
     background: #ffffff;
 }
 
@@ -1863,6 +1888,36 @@
     color: var(--color-text-soft);
     font-size: 11px;
     font-weight: 700;
+}
+
+.service-testimonial__dots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 16px;
+}
+
+.service-testimonial__dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(23, 21, 31, 0.22);
+    cursor: pointer;
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.service-testimonial__dot[aria-current="true"] {
+    background: var(--service-accent);
+    transform: scale(1.35);
+}
+
+.service-testimonial__dot:focus-visible {
+    outline: 2px solid var(--service-accent);
+    outline-offset: 3px;
 }
 
 
@@ -2539,6 +2594,8 @@
 
     .service-overview__visual {
         order: 2;
+        max-width: 620px;
+        margin-inline: auto;
     }
 
     .service-deliverables__head,
@@ -2563,6 +2620,12 @@
     .service-highlight__text,
     .service-highlight__copy {
         max-width: none;
+    }
+
+    .service-overview__points,
+    .service-highlight__points {
+        max-width: 520px;
+        margin-inline: auto;
     }
 
     .service-why__grid {
@@ -2642,6 +2705,11 @@
    ========================================================= */
 
 @media (max-width: 700px) {
+    .service-process,
+    .service-results {
+        padding-block: 35px;
+    }
+
     .service-hero__inner {
         padding-top: 44px;
         padding-bottom: 98px;
@@ -2685,15 +2753,15 @@
     .service-hero__float--metric {
         top: 50px;
         left: 0;
-        width: 145px;
-        padding: 14px;
+        width: 128px;
+        padding: 11px 12px;
     }
 
     .service-hero__float--feature {
         right: 0;
         bottom: 24px;
-        width: 170px;
-        padding: 14px;
+        width: 152px;
+        padding: 10px;
     }
 
     .service-hero__accent--one {
@@ -2760,29 +2828,53 @@
     }
 
     .service-overview__visual {
-        min-height: 450px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: 12px;
+        width: 100%;
+        max-width: 430px;
+        margin-inline: auto;
+        min-height: 0;
+    }
+
+    .service-overview__main-media,
+    .service-overview__secondary-media {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 24px;
+        box-shadow: 0 18px 36px -22px rgba(23, 21, 31, 0.34);
     }
 
     .service-overview__main-media {
-        width: 76%;
-        height: 420px;
-        border-radius: 28px;
+        height: clamp(170px, 38vw, 230px);
     }
 
     .service-overview__secondary-media {
-        width: 50%;
-        height: 255px;
-        border-radius: 130px;
+        z-index: 1;
+        height: clamp(150px, 34vw, 210px);
+        margin-top: 28px;
+        border: 5px solid #ffffff;
     }
 
     .service-overview__points {
         grid-template-columns: 1fr;
         gap: 7px;
+        max-width: 420px;
+        margin-inline: auto;
+        justify-items: center;
+    }
+
+    .service-overview-point {
+        justify-content: center;
     }
 
     .service-highlight__visual {
         min-height: 400px;
         max-width: 340px;
+        margin-inline: auto;
     }
 
     .service-highlight__frame {
@@ -2810,6 +2902,13 @@
     .service-highlight__points {
         grid-template-columns: 1fr;
         gap: 10px;
+        max-width: 420px;
+        margin-inline: auto;
+        justify-items: center;
+    }
+
+    .service-highlight-point {
+        justify-content: center;
     }
 
     .deliverables-grid {
@@ -3022,6 +3121,8 @@
     }
 
     .service-faq__intro {
+        position: static;
+        top: auto;
         width: 100%;
         max-width: none;
         padding: 18px 16px;
@@ -3029,6 +3130,11 @@
         box-shadow:
             7px 7px 0 var(--service-accent-soft),
             0 14px 32px rgba(31, 24, 45, 0.1);
+    }
+
+    .service-faq__intro.aos-init,
+    .service-faq__intro.aos-animate {
+        position: static;
     }
 
     .service-faq__intro::before {
@@ -3143,23 +3249,25 @@
     }
 
     .service-hero__float--metric {
-        width: 128px;
+        width: 116px;
     }
 
     .service-hero__float--feature {
-        width: 154px;
+        width: 138px;
     }
 
     .service-overview__visual {
-        min-height: 400px;
+        max-width: 360px;
     }
 
     .service-overview__main-media {
-        height: 370px;
+        height: 178px;
     }
 
     .service-overview__secondary-media {
-        height: 215px;
+        height: 158px;
+        margin-top: 22px;
+        border-radius: 22px;
     }
 
     .service-highlight__visual {
