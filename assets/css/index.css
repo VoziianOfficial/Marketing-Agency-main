@@ -1105,6 +1105,223 @@
 
 
 /* =========================================================
+   5B. HOW WE WORK
+   ========================================================= */
+
+.how-we-work {
+    background: #ffffff;
+}
+
+.how-we-work__head {
+    max-width: 520px;
+    margin-inline: auto;
+    text-align: center;
+}
+
+.how-we-work__head .section-kicker {
+    justify-content: center;
+}
+
+.how-we-work__title {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 3.6vw, 50px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+}
+
+.how-we-work__stages {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 52px;
+}
+
+.how-we-work__stage {
+    flex: 1 1 0;
+    max-width: 300px;
+    text-align: center;
+}
+
+.how-we-work__visual {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 26px;
+}
+
+.how-we-work__visual--discover {
+    --stage-accent: var(--color-purple);
+    --stage-soft: #f4effa;
+}
+
+.how-we-work__visual--create {
+    --stage-accent: var(--color-carrot);
+    --stage-soft: #fff0e9;
+}
+
+.how-we-work__visual--grow {
+    --stage-accent: #1383a9;
+    --stage-soft: #e6f8fe;
+}
+
+.how-we-work__ring {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid var(--stage-accent);
+    border-radius: 50%;
+    opacity: 0.32;
+    transition: transform var(--transition-base);
+}
+
+.how-we-work__visual--discover .how-we-work__ring {
+    transform: translate(7px, 7px) rotate(-4deg);
+}
+
+.how-we-work__visual--create .how-we-work__ring {
+    transform: translate(-8px, 6px) rotate(3deg);
+}
+
+.how-we-work__visual--grow .how-we-work__ring {
+    transform: translate(6px, -8px) rotate(-3deg);
+}
+
+.how-we-work__lines {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    fill: none;
+    stroke: var(--stage-accent);
+    stroke-width: 1.6;
+    opacity: 0.45;
+}
+
+.how-we-work__visual--discover .how-we-work__lines {
+    bottom: -6px;
+    left: -14px;
+}
+
+.how-we-work__visual--create .how-we-work__lines {
+    top: -10px;
+    right: -12px;
+    transform: scaleX(-1);
+}
+
+.how-we-work__visual--grow .how-we-work__lines {
+    right: -14px;
+    bottom: -8px;
+    transform: scale(-1);
+}
+
+.how-we-work__circle {
+    position: absolute;
+    inset: 12px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(23, 21, 31, 0.08);
+    border-radius: 50%;
+    background: var(--stage-soft);
+    color: var(--stage-accent);
+    box-shadow: var(--shadow-md);
+    transition:
+        box-shadow var(--transition-base),
+        border-color var(--transition-base);
+}
+
+.how-we-work__circle svg {
+    width: 30px;
+    height: 30px;
+}
+
+.how-we-work__accent {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #ffffff;
+    border-radius: 7px;
+    background: var(--stage-accent);
+    box-shadow: var(--shadow-xs);
+}
+
+.how-we-work__visual--discover .how-we-work__accent {
+    top: -4px;
+    right: -2px;
+}
+
+.how-we-work__visual--create .how-we-work__accent {
+    right: -6px;
+    bottom: -2px;
+}
+
+.how-we-work__visual--grow .how-we-work__accent {
+    bottom: -4px;
+    left: -2px;
+}
+
+.how-we-work__stage:hover .how-we-work__visual {
+    transform: translateY(-6px);
+}
+
+.how-we-work__stage:hover .how-we-work__circle {
+    border-color: var(--stage-accent);
+    box-shadow: var(--shadow-lg);
+}
+
+.how-we-work__stage:hover .how-we-work__visual--discover .how-we-work__ring {
+    transform: translate(10px, 10px) rotate(-4deg);
+}
+
+.how-we-work__stage:hover .how-we-work__visual--create .how-we-work__ring {
+    transform: translate(-11px, 9px) rotate(3deg);
+}
+
+.how-we-work__stage:hover .how-we-work__visual--grow .how-we-work__ring {
+    transform: translate(9px, -11px) rotate(-3deg);
+}
+
+.how-we-work__stage-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+.how-we-work__stage-copy {
+    max-width: 250px;
+    margin: 10px auto 0;
+    color: var(--color-text-soft);
+    font-size: 14.5px;
+    line-height: 1.65;
+}
+
+.how-we-work__connector {
+    flex: 0 0 auto;
+    width: clamp(64px, 7vw, 140px);
+    height: 128px;
+    align-self: flex-start;
+}
+
+.how-we-work__connector-line {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.how-we-work__connector-line--v {
+    display: none;
+}
+
+.how-we-work__connector-path {
+    stroke: rgba(139, 61, 245, 0.3);
+}
+
+.how-we-work__connector-head {
+    stroke: rgba(139, 61, 245, 0.55);
+}
+
+
+/* =========================================================
    6. CAPABILITIES
    ========================================================= */
 
@@ -2808,6 +3025,31 @@
         min-height: 570px;
     }
 
+    .how-we-work__stages {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+    }
+
+    .how-we-work__stage {
+        max-width: 360px;
+    }
+
+    .how-we-work__connector {
+        width: 84px;
+        height: 84px;
+        align-self: center;
+        margin: -6px 0;
+    }
+
+    .how-we-work__connector-line--h {
+        display: none;
+    }
+
+    .how-we-work__connector-line--v {
+        display: block;
+    }
+
     .capabilities__visual {
         min-height: 580px;
     }
@@ -3390,6 +3632,17 @@
 
     .about-agency__float {
         min-width: 155px;
+    }
+
+    .how-we-work__visual {
+        width: 108px;
+        height: 108px;
+        margin-bottom: 20px;
+    }
+
+    .how-we-work__connector {
+        width: 64px;
+        height: 64px;
     }
 
     .capabilities__visual {
