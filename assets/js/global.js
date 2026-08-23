@@ -3,164 +3,15 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-    const CONFIG = window.SITE_CONFIG || {};
-
-    initSiteConfig(CONFIG);
     initHeader();
-    initMenu(CONFIG);
-    initSearch(CONFIG);
-    initCookies(CONFIG);
-    initForms(CONFIG);
+    initMenu();
+    initSearch();
+    initCookies();
+    initForms();
     initNavigation();
     initServicesDropdown();
     initAOS();
 });
-
-
-
-
-function initSiteConfig(config) {
-    if (!config || typeof config !== "object") {
-        return;
-    }
-
-    const pageKey = document.body.dataset.page;
-    const currentPage = pageKey && config.pages
-        ? config.pages[pageKey]
-        : null;
-
-
-
-    if (currentPage?.title) {
-        document.title = currentPage.title;
-    } else if (config.browserTitle) {
-        document.title = config.browserTitle;
-    }
-
-
-
-    if (currentPage?.description) {
-        const description =
-            document.querySelector('meta[name="description"]');
-
-        if (description) {
-            description.setAttribute(
-                "content",
-                currentPage.description
-            );
-        }
-    }
-
-
-
-    document
-        .querySelectorAll("[data-brand-name]")
-        .forEach((element) => {
-            element.textContent = config.brandName || "";
-        });
-
-
-
-    document
-        .querySelectorAll("[data-site-logo]")
-        .forEach((image) => {
-            if (!config.logo) {
-                return;
-            }
-
-            image.src = config.logo;
-            image.alt = `${config.brandName || "Agency"} logo`;
-        });
-
-
-
-    if (config.favicon) {
-        let favicon =
-            document.querySelector(
-                'link[rel="icon"][data-site-favicon]'
-            );
-
-        if (!favicon) {
-            favicon = document.createElement("link");
-            favicon.rel = "icon";
-            favicon.setAttribute(
-                "data-site-favicon",
-                ""
-            );
-
-            document.head.appendChild(favicon);
-        }
-
-        favicon.href = config.favicon;
-    }
-
-
-
-    document
-        .querySelectorAll("[data-site-email]")
-        .forEach((element) => {
-            if (!config.email) {
-                return;
-            }
-
-            element.textContent = config.email;
-
-            if (element.tagName === "A") {
-                element.href = `mailto:${config.email}`;
-            }
-        });
-
-
-
-    document
-        .querySelectorAll("[data-site-disclaimer]")
-        .forEach((element) => {
-            element.textContent =
-                config.disclaimer || "";
-        });
-
-
-
-    if (config.navigation) {
-        document
-            .querySelectorAll("[data-nav-label]")
-            .forEach((element) => {
-                const key =
-                    element.dataset.navLabel;
-
-                if (config.navigation[key]) {
-                    element.textContent =
-                        config.navigation[key];
-                }
-            });
-    }
-
-
-
-    const year = new Date().getFullYear();
-
-    document
-        .querySelectorAll("[data-current-year]")
-        .forEach((element) => {
-            element.textContent = year;
-        });
-
-
-
-    document
-        .querySelectorAll("[data-copyright]")
-        .forEach((element) => {
-            const prefix =
-                config.copyright?.prefix || "©";
-
-            const suffix =
-                config.copyright?.suffix ||
-                `${config.brandName || ""}. All rights reserved.`;
-
-            element.textContent =
-                `${prefix} ${year} ${suffix}`;
-        });
-}
 
 
 
@@ -208,7 +59,7 @@ function initHeader() {
 
 
 
-function initMenu(config = {}) {
+function initMenu() {
     const menu =
         document.querySelector(".menu-panel");
 
@@ -238,7 +89,7 @@ function initMenu(config = {}) {
         );
 
     const menuSearchIndex =
-        buildSearchIndex(config);
+        buildSearchIndex();
 
     const menuSearchResults =
         document.createElement("div");
@@ -521,7 +372,7 @@ function initMenu(config = {}) {
 
 
 
-function initSearch(config) {
+function initSearch() {
     const modal =
         document.querySelector(
             ".search-modal"
@@ -554,7 +405,7 @@ function initSearch(config) {
     let previousFocus = null;
 
     const searchIndex =
-        buildSearchIndex(config);
+        buildSearchIndex();
 
     const getFocusableElements = () => {
         return Array.from(
@@ -755,14 +606,36 @@ function initSearch(config) {
 }
 
 
-function buildSearchIndex(config) {
+function buildSearchIndex() {
     const brand =
-        config.brandName || "LLC Advantshield";
+        "LLC Advantshield";
 
-    const services =
-        Array.isArray(config.servicePages)
-            ? config.servicePages
-            : [];
+    const services = [
+        {
+            slug: "digital-strategy.html",
+            name: "Digital Strategy"
+        },
+        {
+            slug: "seo.html",
+            name: "SEO"
+        },
+        {
+            slug: "social-media-marketing.html",
+            name: "Social Media Marketing"
+        },
+        {
+            slug: "paid-advertising.html",
+            name: "Paid Advertising"
+        },
+        {
+            slug: "content-marketing.html",
+            name: "Content Marketing"
+        },
+        {
+            slug: "web-design.html",
+            name: "Web Design"
+        }
+    ];
 
     const index = [
         {
@@ -1085,7 +958,7 @@ function renderSearchResults(
 
 
 
-function initCookies(config) {
+function initCookies() {
     const card =
         document.querySelector(
             ".cookie-card"
@@ -1094,16 +967,6 @@ function initCookies(config) {
     if (!card) {
         return;
     }
-
-    const message =
-        card.querySelector(
-            "[data-cookie-message]"
-        );
-
-    const policy =
-        card.querySelector(
-            "[data-cookie-policy]"
-        );
 
     const acceptButton =
         card.querySelector(
@@ -1117,35 +980,6 @@ function initCookies(config) {
 
     const storageKey =
         "advantshield-cookie-choice";
-
-    if (message && config.cookies?.message) {
-        message.textContent =
-            config.cookies.message;
-    }
-
-    if (
-        policy &&
-        config.cookies?.policyText
-    ) {
-        policy.textContent =
-            config.cookies.policyText;
-    }
-
-    if (
-        acceptButton &&
-        config.cookies?.acceptText
-    ) {
-        acceptButton.textContent =
-            config.cookies.acceptText;
-    }
-
-    if (
-        declineButton &&
-        config.cookies?.rejectText
-    ) {
-        declineButton.textContent =
-            config.cookies.rejectText;
-    }
 
     let savedChoice = null;
 
@@ -1202,7 +1036,7 @@ function initCookies(config) {
 
 
 
-function initForms(config) {
+function initForms() {
     const forms =
         document.querySelectorAll(
             ".js-contact-form"
@@ -1253,9 +1087,7 @@ function initForms(config) {
                 const endpoint =
                     form.getAttribute(
                         "action"
-                    ) ||
-                    config.form?.endpoint ||
-                    "contact.php";
+                    ) || "contact.php";
 
                 const originalButtonText =
                     submitButton?.textContent;
@@ -1292,9 +1124,7 @@ function initForms(config) {
                     ) {
                         throw new Error(
                             payload?.message ||
-                            config.form
-                                ?.errorMessage ||
-                            "Something went wrong."
+                            "Something went wrong. Please try again."
                         );
                     }
 
@@ -1302,9 +1132,7 @@ function initForms(config) {
                         status,
                         "success",
                         payload?.message ||
-                            config.form
-                                ?.successMessage ||
-                            "Thank you. Your message has been successfully sent."
+                            "Message sent successfully"
                     );
 
                     form.reset();
@@ -1313,8 +1141,6 @@ function initForms(config) {
                         status,
                         "error",
                         error?.message ||
-                            config.form
-                                ?.errorMessage ||
                             "Something went wrong. Please try again."
                     );
                 } finally {

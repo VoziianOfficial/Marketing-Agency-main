@@ -29,91 +29,14 @@ function sendResponse(
 }
 
 
-function readConfigString(
-    string $configSource,
-    string $key
-): ?string {
-    $pattern = '/\b' . preg_quote($key, '/') . '\s*:\s*("(?:\\\\.|[^"\\\\])*")/';
-
-    if (
-        !preg_match(
-            $pattern,
-            $configSource,
-            $matches
-        )
-    ) {
-        return null;
-    }
-
-    $value = json_decode(
-        $matches[1],
-        true
-    );
-
-    return is_string($value)
-        ? trim($value)
-        : null;
-}
-
-
-function readSiteConfig(): array
+function textLength(string $value): int
 {
-    $configPath = __DIR__ . '/config/config.js';
-
-    if (!is_readable($configPath)) {
-        sendResponse(
-            false,
-            'Something went wrong. Please try again.',
-            500
-        );
+    if (function_exists('mb_strlen')) {
+        return mb_strlen($value);
     }
 
-    $configSource = file_get_contents($configPath);
-
-    if ($configSource === false) {
-        sendResponse(
-            false,
-            'Something went wrong. Please try again.',
-            500
-        );
-    }
-
-    $brandName = readConfigString(
-        $configSource,
-        'brandName'
-    );
-
-    $email = readConfigString(
-        $configSource,
-        'email'
-    );
-
-    if (
-        !$brandName ||
-        !$email ||
-        !filter_var(
-            $email,
-            FILTER_VALIDATE_EMAIL
-        )
-    ) {
-        sendResponse(
-            false,
-            'Something went wrong. Please try again.',
-            500
-        );
-    }
-
-    return [
-        'brandName' => preg_replace(
-            '/[\r\n]+/',
-            ' ',
-            strip_tags($brandName)
-        ) ?? '',
-        'email' => $email
-    ];
+    return strlen($value);
 }
-
-
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -127,11 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 
 
-$siteConfig = readSiteConfig();
+$recipientEmail = 'hello@advantshield.com';
 
-$recipientEmail = $siteConfig['email'];
-
-$siteName = $siteConfig['brandName'];
+$siteName = 'LLC Advantshield';
 
 
 
@@ -188,6 +109,12 @@ $email = str_replace(
     $email
 );
 
+$message = preg_replace(
+    '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/u',
+    '',
+    $message
+) ?? '';
+
 
 
 
@@ -207,8 +134,8 @@ if (
 
 
 if (
-    mb_strlen($name) < 2 ||
-    mb_strlen($name) > 100
+    textLength($name) < 2 ||
+    textLength($name) > 100
 ) {
     sendResponse(
         false,
@@ -232,7 +159,7 @@ if (
 }
 
 
-if (mb_strlen($email) > 190) {
+if (textLength($email) > 190) {
     sendResponse(
         false,
         'Please enter a valid email address.',
@@ -241,7 +168,7 @@ if (mb_strlen($email) > 190) {
 }
 
 
-if (mb_strlen($service) > 120) {
+if (textLength($service) > 120) {
     sendResponse(
         false,
         'Please select a valid service.',
@@ -250,7 +177,7 @@ if (mb_strlen($service) > 120) {
 }
 
 if (
-    mb_strlen($zip) > 20 ||
+    textLength($zip) > 20 ||
     !preg_match(
         '/^[0-9A-Za-z][0-9A-Za-z\s-]{1,18}[0-9A-Za-z]$/',
         $zip
@@ -265,12 +192,27 @@ if (
 
 
 if (
-    mb_strlen($message) < 10 ||
-    mb_strlen($message) > 5000
+    textLength($message) < 10 ||
+    textLength($message) > 5000
 ) {
     sendResponse(
         false,
         'Please enter a message between 10 and 5000 characters.',
+        422
+    );
+}
+
+
+if (
+    preg_match_all(
+        '/https?:\/\//i',
+        $message,
+        $links
+    ) > 4
+) {
+    sendResponse(
+        false,
+        'Your message looks like spam. Please remove extra links and try again.',
         422
     );
 }
@@ -345,6 +287,22 @@ $safeSiteName = htmlspecialchars(
     ENT_QUOTES |
     ENT_SUBSTITUTE,
     'UTF-8'
+);
+
+$headerName = trim(
+    preg_replace(
+        '/["<>]+/',
+        '',
+        $name
+    ) ?? ''
+);
+
+$headerSiteName = trim(
+    preg_replace(
+        '/["<>]+/',
+        '',
+        $siteName
+    ) ?? ''
 );
 
 
@@ -449,15 +407,15 @@ if (
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
-    'From: ' . $siteName . ' Website <' . $fromEmail . '>',
-    'Reply-To: ' . $name . ' <' . $email . '>',
+    'From: ' . $headerSiteName . ' Website <' . $fromEmail . '>',
+    'Reply-To: ' . $headerName . ' <' . $email . '>',
     'X-Mailer: PHP/' . phpversion()
 ];
 
 
 
 
-$mailSent = mail(
+$mailSent = @mail(
     $recipientEmail,
     $subject,
     $emailBody,
@@ -478,5 +436,5 @@ if (!$mailSent) {
 
 sendResponse(
     true,
-    'Thank you. Your message has been successfully sent.'
+    'Message sent successfully'
 );
