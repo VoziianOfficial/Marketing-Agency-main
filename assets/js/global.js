@@ -75,7 +75,7 @@ function initMenu() {
 
     const menuLinks =
         menu.querySelectorAll(
-            ".menu-panel__nav-link"
+            ".menu-panel__nav-link, .menu-panel__quick-link"
         );
 
     const menuSearch =
