@@ -575,7 +575,7 @@ function readServiceTestimonial(content) {
                     ".service-testimonial__name"
                 )
                 ?.textContent.trim() ||
-            "Lunera approach",
+            "LLC Advantshield approach",
         role:
             content
                 .querySelector(

@@ -1320,10 +1320,13 @@ textarea {
 }
 
 .site-footer__email {
+    display: inline-block;
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.6vw, 24px);
-    font-weight: 650;
-    letter-spacing: -0.025em;
+    font-size: clamp(14px, 1vw, 17px);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.35;
+    white-space: nowrap;
 }
 
 .site-footer__bottom {

@@ -1,15 +1,18 @@
 window.SITE_CONFIG = Object.freeze({
-    brandName: "Lunera",
+    brandName: "LLC Advantshield",
 
     logo: "assets/icons/logo.svg",
     favicon: "assets/icons/favicon.svg",
 
-    email: "hello@lunera-agency.com",
+    email: "hello@advantshield.com",
 
-    browserTitle: "Lunera | Premium Marketing Agency",
+    browserTitle: "LLC Advantshield | Premium Marketing Agency",
+
+    license:
+        "California Contractor License #932946 — B, General Building Contractor",
 
     disclaimer:
-        "Lunera is an independent marketing agency. Services, strategies, timelines and results may vary depending on project scope, market conditions and client requirements.",
+        "California Contractor License #932946 — B, General Building Contractor",
 
     navigation: {
         home: "Home",
@@ -20,57 +23,57 @@ window.SITE_CONFIG = Object.freeze({
 
     pages: {
         home: {
-            title: "Lunera | Premium Marketing Agency",
+            title: "LLC Advantshield | Premium Marketing Agency",
             description:
                 "Strategy, creative and digital marketing built to help ambitious brands grow."
         },
 
         digitalStrategy: {
-            title: "Digital Strategy | Lunera",
+            title: "Digital Strategy | LLC Advantshield",
             description:
                 "Focused digital strategies designed to strengthen positioning, reach and sustainable growth."
         },
 
         seo: {
-            title: "SEO | Lunera",
+            title: "SEO | LLC Advantshield",
             description:
                 "Search strategies built around visibility, relevance and long-term organic growth."
         },
 
         socialMediaMarketing: {
-            title: "Social Media Marketing | Lunera",
+            title: "Social Media Marketing | LLC Advantshield",
             description:
                 "Creative social media strategies that build stronger brands and meaningful audience connections."
         },
 
         paidAdvertising: {
-            title: "Paid Advertising | Lunera",
+            title: "Paid Advertising | LLC Advantshield",
             description:
                 "Performance-focused advertising campaigns designed for reach, engagement and conversion."
         },
 
         contentMarketing: {
-            title: "Content Marketing | Lunera",
+            title: "Content Marketing | LLC Advantshield",
             description:
                 "Strategic content systems that turn ideas into valuable brand experiences."
         },
 
         webDesign: {
-            title: "Web Design | Lunera",
+            title: "Web Design | LLC Advantshield",
             description:
                 "Premium digital experiences combining thoughtful design, clarity and conversion-focused structure."
         },
 
         privacy: {
-            title: "Privacy Policy | Lunera"
+            title: "Privacy Policy | LLC Advantshield"
         },
 
         terms: {
-            title: "Terms & Conditions | Lunera"
+            title: "Terms & Conditions | LLC Advantshield"
         },
 
         cookies: {
-            title: "Cookie Policy | Lunera"
+            title: "Cookie Policy | LLC Advantshield"
         }
     },
 
@@ -117,6 +120,6 @@ window.SITE_CONFIG = Object.freeze({
 
     copyright: {
         prefix: "©",
-        suffix: "Lunera. All rights reserved."
+        suffix: "LLC Advantshield. All rights reserved."
     }
 });

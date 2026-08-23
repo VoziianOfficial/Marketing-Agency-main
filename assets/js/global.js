@@ -465,7 +465,7 @@ function initMenu(config = {}) {
 
             document.dispatchEvent(
                 new CustomEvent(
-                    "lunera:open-search",
+                    "advantshield:open-search",
                     {
                         detail: {
                             query
@@ -745,7 +745,7 @@ function initSearch(config) {
     );
 
     document.addEventListener(
-        "lunera:open-search",
+        "advantshield:open-search",
         (event) => {
             openSearch(
                 event.detail?.query || ""
@@ -757,7 +757,7 @@ function initSearch(config) {
 
 function buildSearchIndex(config) {
     const brand =
-        config.brandName || "Lunera";
+        config.brandName || "LLC Advantshield";
 
     const services =
         Array.isArray(config.servicePages)
@@ -1116,7 +1116,7 @@ function initCookies(config) {
         );
 
     const storageKey =
-        "lunera-cookie-choice";
+        "advantshield-cookie-choice";
 
     if (message && config.cookies?.message) {
         message.textContent =
