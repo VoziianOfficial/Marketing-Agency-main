@@ -3831,32 +3831,47 @@
         margin-top: 32px;
         padding: 20px 17px;
         border-radius: 20px;
+        text-align: center;
+    }
+
+    .contact-panel__intro {
+        align-items: center;
     }
 
     .contact-panel__label {
+        justify-content: center;
         margin-bottom: 10px;
         font-size: 10px;
     }
 
     .contact-panel__title {
+        max-width: 100%;
+        margin-inline: auto;
         font-size: clamp(28px, 9vw, 36px);
     }
 
     .contact-panel__copy {
+        max-width: 36ch;
+        margin-inline: auto;
         margin-top: 10px;
         font-size: 12px;
         line-height: 1.5;
     }
 
     .contact-panel__email {
+        margin-inline: auto;
         margin-top: 12px;
         font-size: 13px;
     }
 
     .contact-form {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 390px;
+        margin-inline: auto;
         gap: 10px;
         padding: 0;
+        text-align: left;
     }
 
     .contact-form .form-field {
@@ -3867,6 +3882,11 @@
     .contact-form .form-input {
         min-height: 42px;
         padding-inline: 12px;
+    }
+
+    .contact-form .form-input,
+    .contact-form .form-textarea {
+        font-size: 16px;
     }
 
     .contact-form .form-textarea {
