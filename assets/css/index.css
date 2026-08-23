@@ -3678,7 +3678,16 @@
 
     .about-agency__features {
         grid-template-columns: 1fr;
-        gap: 8px;
+        justify-items: center;
+        width: min(100%, 360px);
+        margin-inline: auto;
+        gap: 10px;
+    }
+
+    .about-feature {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
     }
 
     .capabilities__visual {
@@ -3853,10 +3862,28 @@
     }
 
     .services-spotlight__item {
-        padding: 13px 4px 13px 16px;
+        justify-content: center;
+        width: min(100%, 360px);
+        padding: 14px 18px;
+        text-align: center;
+    }
+
+    .services-spotlight__item::before {
+        top: auto;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        transform: translateX(-50%);
+    }
+
+    .services-spotlight__item.is-active::before {
+        width: 56%;
+        height: 3px;
     }
 
     .services-spotlight__list {
+        align-items: center;
         width: min(100%, 560px);
         margin-inline: auto;
     }
@@ -3953,11 +3980,11 @@
     }
 
     .contact-form {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         width: 100%;
         max-width: 390px;
         margin-inline: auto;
-        gap: 10px;
+        gap: 9px;
         padding: 0;
         text-align: left;
     }
@@ -3969,7 +3996,7 @@
 
     .contact-form .form-input {
         min-height: 42px;
-        padding-inline: 12px;
+        padding-inline: 10px;
     }
 
     .contact-form .form-input,
@@ -3978,8 +4005,8 @@
     }
 
     .contact-form .form-textarea {
-        min-height: 76px;
-        padding: 11px 12px;
+        min-height: 84px;
+        padding: 11px 10px;
     }
 
     .contact-form .form-field--full,
