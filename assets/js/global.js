@@ -1391,8 +1391,20 @@ function initServicesDropdown() {
 
     let isOpen = false;
     let wasOpenBeforeInteraction = false;
+    let closeTimer = 0;
+
+    const cancelClose = () => {
+        if (!closeTimer) {
+            return;
+        }
+
+        window.clearTimeout(closeTimer);
+        closeTimer = 0;
+    };
 
     const openDropdown = () => {
+        cancelClose();
+
         if (isOpen) {
             return;
         }
@@ -1410,6 +1422,8 @@ function initServicesDropdown() {
     const closeDropdown = ({
         restoreFocus = false
     } = {}) => {
+        cancelClose();
+
         if (!isOpen) {
             return;
         }
@@ -1426,6 +1440,18 @@ function initServicesDropdown() {
         if (restoreFocus) {
             trigger.focus();
         }
+    };
+
+    const scheduleClose = () => {
+        cancelClose();
+
+        closeTimer = window.setTimeout(
+            () => {
+                closeTimer = 0;
+                closeDropdown();
+            },
+            180
+        );
     };
 
     trigger.addEventListener(
@@ -1468,7 +1494,7 @@ function initServicesDropdown() {
         "mouseleave",
         () => {
             if (hoverQuery.matches) {
-                closeDropdown();
+                scheduleClose();
             }
         }
     );
