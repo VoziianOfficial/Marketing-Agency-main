@@ -5,7 +5,9 @@
 
 .legal-page {
     position: relative;
+    overflow-y: auto;
     background: #f5f2f7;
+    -webkit-overflow-scrolling: touch;
 }
 
 

@@ -3,11 +3,30 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
+    resetLegalScrollLock();
     initLegalNavigation();
     initLegalAnchorLinks();
     initLegalBackToTop();
     initLegalUpdatedDate();
 });
+
+window.addEventListener(
+    "pageshow",
+    resetLegalScrollLock
+);
+
+
+
+
+function resetLegalScrollLock() {
+    document.body.classList.remove(
+        "menu-open",
+        "search-open"
+    );
+
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
+}
 
 
 
@@ -197,14 +216,19 @@ function keepActiveLegalLinkVisible(
         return;
     }
 
-    link.scrollIntoView({
-        behavior:
-            prefersLegalReducedMotion()
-                ? "auto"
-                : "smooth",
+    const nextScrollLeft =
+        list.scrollLeft +
+        linkRect.left -
+        listRect.left -
+        (listRect.width - linkRect.width) / 2;
 
-        block: "nearest",
-        inline: "center"
+    list.scrollTo({
+        left: Math.max(
+            0,
+            nextScrollLeft
+        ),
+
+        behavior: "auto"
     });
 }
 
