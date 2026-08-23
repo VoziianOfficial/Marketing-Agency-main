@@ -1,8 +1,4 @@
-/* =========================================================
-   LUNERA — HOME PAGE JS
-   Swipers / FAQ / Parallax / Hero Motion /
-   Entrance Animation / Counters
-   ========================================================= */
+
 
 "use strict";
 
@@ -19,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* =========================================================
-   1. MOTION SETTINGS
-   ========================================================= */
+
 
 function prefersReducedMotion() {
     return window.matchMedia(
@@ -30,9 +24,7 @@ function prefersReducedMotion() {
 }
 
 
-/* =========================================================
-   2. HERO ENTRANCE
-   ========================================================= */
+
 
 function initHomeHeroEntrance() {
     const hero =
@@ -142,9 +134,7 @@ function initHomeHeroEntrance() {
 }
 
 
-/* =========================================================
-   3. HERO POINTER MOTION
-   ========================================================= */
+
 
 function initHeroMotion() {
     const visual =
@@ -253,9 +243,7 @@ function initHeroMotion() {
 }
 
 
-/* =========================================================
-   4. SWIPERS
-   ========================================================= */
+
 
 function initHomeSwipers() {
     if (!window.Swiper) {
@@ -430,9 +418,7 @@ function setupManualSwiperPagination(
 }
 
 
-/* =========================================================
-   5. SERVICES SWIPER
-   ========================================================= */
+
 
 function initServicesSwiper(
     reduceMotion
@@ -553,9 +539,7 @@ function initServicesSwiper(
 }
 
 
-/* =========================================================
-   6. PROJECTS SWIPER
-   ========================================================= */
+
 
 function initProjectsSwiper(
     reduceMotion
@@ -707,9 +691,7 @@ function updateProjectSlides(swiper) {
 }
 
 
-/* =========================================================
-   7. TESTIMONIALS SWIPER
-   ========================================================= */
+
 
 function initTestimonialsSwiper(
     reduceMotion
@@ -807,9 +789,7 @@ function initTestimonialsSwiper(
 }
 
 
-/* =========================================================
-   8. FAQ ACCORDION
-   ========================================================= */
+
 
 function initHomeFAQ() {
     const faqLists =
@@ -1062,9 +1042,7 @@ function closeFAQItem(item) {
 }
 
 
-/* =========================================================
-   9. PARALLAX
-   ========================================================= */
+
 
 function initHomeParallax() {
     const elements =
@@ -1153,9 +1131,7 @@ function initHomeParallax() {
 }
 
 
-/* =========================================================
-   10. COUNTERS
-   ========================================================= */
+
 
 function initCounters() {
     const counters =
@@ -1353,9 +1329,7 @@ function formatCounterValue(
 }
 
 
-/* =========================================================
-   11. SERVICES SPOTLIGHT
-   ========================================================= */
+
 
 function initServicesSpotlight() {
     const section =

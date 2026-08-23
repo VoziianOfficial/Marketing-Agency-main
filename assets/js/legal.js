@@ -1,7 +1,4 @@
-/* =========================================================
-   LUNERA — LEGAL PAGES JS
-   Section Navigation / Anchors / Back To Top / Updated Date
-   ========================================================= */
+
 
 "use strict";
 
@@ -13,9 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* =========================================================
-   1. LEGAL SECTION NAVIGATION
-   ========================================================= */
+
 
 function initLegalNavigation() {
     const navigation =
@@ -134,10 +129,7 @@ function initLegalNavigation() {
         });
     }
 
-    /*
-       Initial active section.
-       Useful when page opens directly with a hash.
-    */
+
 
     const initialHash =
         window.location.hash;
@@ -163,9 +155,7 @@ function initLegalNavigation() {
 }
 
 
-/* =========================================================
-   2. KEEP ACTIVE MOBILE NAV ITEM VISIBLE
-   ========================================================= */
+
 
 function keepActiveLegalLinkVisible(
     link,
@@ -219,9 +209,7 @@ function keepActiveLegalLinkVisible(
 }
 
 
-/* =========================================================
-   3. LEGAL ANCHOR LINKS
-   ========================================================= */
+
 
 function initLegalAnchorLinks() {
     const links =
@@ -273,10 +261,7 @@ function initLegalAnchorLinks() {
                     target
                 );
 
-                /*
-                   Update URL hash without forcing
-                   the browser to perform a second jump.
-                */
+
 
                 if (
                     window.history &&
@@ -294,9 +279,7 @@ function initLegalAnchorLinks() {
 }
 
 
-/* =========================================================
-   4. SCROLL TO LEGAL TARGET
-   ========================================================= */
+
 
 function scrollToLegalTarget(target) {
     const header =
@@ -333,9 +316,7 @@ function scrollToLegalTarget(target) {
 }
 
 
-/* =========================================================
-   5. BACK TO TOP
-   ========================================================= */
+
 
 function initLegalBackToTop() {
     const buttons =
@@ -356,11 +337,7 @@ function initLegalBackToTop() {
                         "href"
                     );
 
-                /*
-                   Anchor handling is already
-                   managed above when a valid
-                   target exists.
-                */
+
 
                 if (
                     href &&
@@ -385,9 +362,7 @@ function initLegalBackToTop() {
 }
 
 
-/* =========================================================
-   6. LEGAL UPDATED DATE
-   ========================================================= */
+
 
 function initLegalUpdatedDate() {
     const elements =
@@ -420,10 +395,7 @@ function initLegalUpdatedDate() {
             return;
         }
 
-        /*
-           If data-legal-updated="auto",
-           use document.lastModified when valid.
-        */
+
 
         const modified =
             new Date(
@@ -444,9 +416,7 @@ function initLegalUpdatedDate() {
 }
 
 
-/* =========================================================
-   7. DATE HELPERS
-   ========================================================= */
+
 
 function parseLegalDate(value) {
     if (!value) {
@@ -486,9 +456,7 @@ function formatLegalDate(date) {
 }
 
 
-/* =========================================================
-   8. REDUCED MOTION
-   ========================================================= */
+
 
 function prefersLegalReducedMotion() {
     return window.matchMedia(

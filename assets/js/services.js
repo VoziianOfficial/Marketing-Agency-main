@@ -1,7 +1,4 @@
-/* =========================================================
-   LUNERA — SERVICE PAGES JS
-   Hero / Process Swiper / FAQ / Parallax / Counters
-   ========================================================= */
+
 
 "use strict";
 
@@ -15,9 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* =========================================================
-   1. MOTION SETTINGS
-   ========================================================= */
+
 
 function serviceReducedMotion() {
     return window.matchMedia(
@@ -96,9 +91,7 @@ function refreshProcessSwiperAfterLayout(
 }
 
 
-/* =========================================================
-   2. SERVICE HERO ENTRANCE
-   ========================================================= */
+
 
 function initServiceHero() {
     const hero =
@@ -241,9 +234,7 @@ function initServiceHero() {
 }
 
 
-/* =========================================================
-   3. PROCESS SWIPER
-   ========================================================= */
+
 
 function initProcessSwiper() {
     const swiperElement =
@@ -402,9 +393,7 @@ function updateProcessSlides(swiper) {
 }
 
 
-/* =========================================================
-   4. SERVICE TESTIMONIAL SWIPER
-   ========================================================= */
+
 
 const serviceTestimonialSlides = {
     strategy: [
@@ -795,9 +784,7 @@ function updateServiceTestimonialDots(swiper) {
 }
 
 
-/* =========================================================
-   5. SERVICE FAQ
-   ========================================================= */
+
 
 function initServiceFAQ() {
     const lists =
@@ -1064,9 +1051,7 @@ function closeServiceFAQ(item) {
 }
 
 
-/* =========================================================
-   5. SERVICE PARALLAX
-   ========================================================= */
+
 
 function initServiceParallax() {
     const elements =
@@ -1159,9 +1144,7 @@ function initServiceParallax() {
 }
 
 
-/* =========================================================
-   6. RESULT COUNTERS
-   ========================================================= */
+
 
 function initServiceCounters() {
     const counters =

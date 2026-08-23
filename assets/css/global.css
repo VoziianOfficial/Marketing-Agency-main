@@ -1,12 +1,7 @@
-/* =========================================================
-   LUNERA — GLOBAL
-   Shared design system / header / menu / search / footer
-   ========================================================= */
 
 
-/* =========================
-   1. ROOT
-   ========================= */
+
+
 
 :root {
     --color-bg: #f7f5f2;
@@ -56,9 +51,7 @@
 }
 
 
-/* =========================
-   2. RESET
-   ========================= */
+
 
 *,
 *::before,
@@ -157,9 +150,7 @@ textarea {
 }
 
 
-/* =========================
-   3. ACCESSIBILITY
-   ========================= */
+
 
 :focus-visible {
     outline: 3px solid rgba(139, 61, 245, 0.38);
@@ -184,9 +175,7 @@ textarea {
 }
 
 
-/* =========================
-   4. LAYOUT
-   ========================= */
+
 
 .site {
     position: relative;
@@ -311,9 +300,7 @@ textarea {
 }
 
 
-/* =========================
-   5. BUTTONS
-   ========================= */
+
 
 .button {
     position: relative;
@@ -408,9 +395,7 @@ textarea {
 }
 
 
-/* =========================
-   6. SITE HEADER
-   ========================= */
+
 
 .site-header {
     position: sticky;
@@ -529,9 +514,7 @@ textarea {
 }
 
 
-/* =========================
-   6b. SERVICES DROPDOWN
-   ========================= */
+
 
 .nav-services {
     position: relative;
@@ -630,9 +613,7 @@ textarea {
 }
 
 
-/* =========================
-   7. BURGER BUTTON
-   ========================= */
+
 
 .menu-toggle {
     display: grid;
@@ -672,9 +653,7 @@ textarea {
 }
 
 
-/* =========================
-   8. FULLSCREEN MENU
-   ========================= */
+
 
 .menu-panel {
     position: fixed;
@@ -793,6 +772,57 @@ textarea {
     pointer-events: auto;
 }
 
+.menu-panel__search-results {
+    display: grid;
+    gap: 7px;
+    margin-top: 14px;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.menu-panel__search-results[hidden] {
+    display: none;
+}
+
+.menu-panel__search-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 38px;
+    padding: 8px 10px;
+    border-radius: 11px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.menu-panel__search-result:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.menu-panel__search-result small {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.menu-panel__search-empty {
+    padding: 9px 10px;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 12px;
+    font-weight: 700;
+}
+
 .menu-panel__nav {
     display: grid;
     margin-top: clamp(54px, 8vh, 86px);
@@ -886,9 +916,7 @@ textarea {
 }
 
 
-/* =========================
-   9. SEARCH MODAL
-   ========================= */
+
 
 .search-modal {
     position: fixed;
@@ -1043,9 +1071,7 @@ textarea {
 }
 
 
-/* =========================
-   10. COOKIE CARD
-   ========================= */
+
 
 .cookie-card {
     position: fixed;
@@ -1132,9 +1158,7 @@ textarea {
 }
 
 
-/* =========================
-   11. GENERIC CARDS
-   ========================= */
+
 
 .surface-card {
     border: 1px solid var(--color-border);
@@ -1155,9 +1179,7 @@ textarea {
 }
 
 
-/* =========================
-   12. FORMS
-   ========================= */
+
 
 .form-field {
     display: grid;
@@ -1220,9 +1242,7 @@ textarea {
 }
 
 
-/* =========================
-   13. FOOTER
-   ========================= */
+
 
 .site-footer {
     position: relative;
@@ -1330,9 +1350,7 @@ textarea {
 }
 
 
-/* =========================
-   14. REVEAL HELPERS
-   ========================= */
+
 
 [data-aos] {
     will-change: transform, opacity;
@@ -1360,9 +1378,7 @@ textarea {
 }
 
 
-/* =========================
-   15. SCROLLBAR
-   ========================= */
+
 
 @media (hover: hover) {
     * {
@@ -1386,9 +1402,7 @@ textarea {
 }
 
 
-/* =========================
-   16. TABLET
-   ========================= */
+
 
 @media (max-width: 1100px) {
     :root {
@@ -1430,9 +1444,7 @@ textarea {
 }
 
 
-/* =========================
-   17. MOBILE
-   ========================= */
+
 
 @media (max-width: 760px) {
     :root {
@@ -1639,9 +1651,7 @@ textarea {
 }
 
 
-/* =========================
-   18. SMALL MOBILE
-   ========================= */
+
 
 @media (max-width: 480px) {
     .button {
@@ -1676,9 +1686,7 @@ textarea {
 }
 
 
-/* =========================
-   19. REDUCED MOTION
-   ========================= */
+
 
 @media (prefers-reduced-motion: reduce) {
     html {

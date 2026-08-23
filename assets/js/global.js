@@ -1,8 +1,4 @@
-/* =========================================================
-   LUNERA — GLOBAL JS
-   Config / Header / Fullscreen Menu / Search / Cookies /
-   Forms / Navigation / AOS
-   ========================================================= */
+
 
 "use strict";
 
@@ -11,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initSiteConfig(CONFIG);
     initHeader();
-    initMenu();
+    initMenu(CONFIG);
     initSearch(CONFIG);
     initCookies(CONFIG);
     initForms(CONFIG);
@@ -21,9 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-/* =========================================================
-   1. CONFIG
-   ========================================================= */
+
 
 function initSiteConfig(config) {
     if (!config || typeof config !== "object") {
@@ -35,7 +29,7 @@ function initSiteConfig(config) {
         ? config.pages[pageKey]
         : null;
 
-    /* Browser title */
+
 
     if (currentPage?.title) {
         document.title = currentPage.title;
@@ -43,7 +37,7 @@ function initSiteConfig(config) {
         document.title = config.browserTitle;
     }
 
-    /* Meta description */
+
 
     if (currentPage?.description) {
         const description =
@@ -57,7 +51,7 @@ function initSiteConfig(config) {
         }
     }
 
-    /* Brand name */
+
 
     document
         .querySelectorAll("[data-brand-name]")
@@ -65,7 +59,7 @@ function initSiteConfig(config) {
             element.textContent = config.brandName || "";
         });
 
-    /* Logo */
+
 
     document
         .querySelectorAll("[data-site-logo]")
@@ -78,7 +72,7 @@ function initSiteConfig(config) {
             image.alt = `${config.brandName || "Agency"} logo`;
         });
 
-    /* Favicon */
+
 
     if (config.favicon) {
         let favicon =
@@ -100,7 +94,7 @@ function initSiteConfig(config) {
         favicon.href = config.favicon;
     }
 
-    /* Email */
+
 
     document
         .querySelectorAll("[data-site-email]")
@@ -116,7 +110,7 @@ function initSiteConfig(config) {
             }
         });
 
-    /* Disclaimer */
+
 
     document
         .querySelectorAll("[data-site-disclaimer]")
@@ -125,7 +119,7 @@ function initSiteConfig(config) {
                 config.disclaimer || "";
         });
 
-    /* Navigation labels */
+
 
     if (config.navigation) {
         document
@@ -141,7 +135,7 @@ function initSiteConfig(config) {
             });
     }
 
-    /* Current year */
+
 
     const year = new Date().getFullYear();
 
@@ -151,7 +145,7 @@ function initSiteConfig(config) {
             element.textContent = year;
         });
 
-    /* Copyright */
+
 
     document
         .querySelectorAll("[data-copyright]")
@@ -169,9 +163,7 @@ function initSiteConfig(config) {
 }
 
 
-/* =========================================================
-   2. HEADER
-   ========================================================= */
+
 
 function initHeader() {
     const header =
@@ -214,11 +206,9 @@ function initHeader() {
 }
 
 
-/* =========================================================
-   3. FULLSCREEN BURGER MENU
-   ========================================================= */
 
-function initMenu() {
+
+function initMenu(config = {}) {
     const menu =
         document.querySelector(".menu-panel");
 
@@ -246,6 +236,22 @@ function initMenu() {
         menu.querySelector(
             ".menu-panel__search-icon"
         );
+
+    const menuSearchIndex =
+        buildSearchIndex(config);
+
+    const menuSearchResults =
+        document.createElement("div");
+
+    menuSearchResults.className =
+        "menu-panel__search-results";
+
+    menuSearchResults.setAttribute(
+        "aria-live",
+        "polite"
+    );
+
+    menuSearchResults.hidden = true;
 
     let previousFocus = null;
 
@@ -318,6 +324,11 @@ function initMenu() {
                 "false"
             );
         });
+
+        if (menuSearchResults) {
+            menuSearchResults.hidden = true;
+            menuSearchResults.replaceChildren();
+        }
 
         if (
             restoreFocus &&
@@ -415,20 +426,42 @@ function initMenu() {
         }
     );
 
-    /*
-       Search inside the fullscreen menu.
-       Enter closes the burger and opens the
-       main search modal with the entered query.
-    */
+
 
     if (menuSearch) {
+        menuSearch
+            .closest(".menu-panel__search")
+            ?.appendChild(menuSearchResults);
+
+        const updateMenuSearch = () => {
+            renderMenuSearchResults(
+                menuSearch.value,
+                menuSearchIndex,
+                menuSearchResults
+            );
+        };
+
         const openMenuSearch = () => {
             const query =
                 menuSearch.value.trim();
 
+            const firstMatch =
+                getSearchMatches(
+                    query,
+                    menuSearchIndex,
+                    1
+                )[0];
+
             closeMenu({
                 restoreFocus: false
             });
+
+            if (query && firstMatch) {
+                window.location.href =
+                    firstMatch.url;
+
+                return;
+            }
 
             document.dispatchEvent(
                 new CustomEvent(
@@ -457,6 +490,27 @@ function initMenu() {
             }
         );
 
+        menuSearch.addEventListener(
+            "input",
+            updateMenuSearch
+        );
+
+        menuSearchResults.addEventListener(
+            "click",
+            (event) => {
+                const result =
+                    event.target.closest(
+                        ".menu-panel__search-result"
+                    );
+
+                if (result) {
+                    closeMenu({
+                        restoreFocus: false
+                    });
+                }
+            }
+        );
+
         menuSearchIcon?.addEventListener(
             "click",
             openMenuSearch
@@ -465,9 +519,7 @@ function initMenu() {
 }
 
 
-/* =========================================================
-   4. SITE SEARCH
-   ========================================================= */
+
 
 function initSearch(config) {
     const modal =
@@ -812,7 +864,88 @@ function buildSearchIndex(config) {
 }
 
 
-function renderSearchResults(
+function getSearchMatches(
+    query,
+    searchIndex,
+    limit = 8
+) {
+    const normalizedQuery =
+        query.trim().toLowerCase();
+
+    if (normalizedQuery.length === 0) {
+        return searchIndex.slice(0, limit);
+    }
+
+    const queryTokens =
+        normalizedQuery
+            .split(/\s+/)
+            .filter(Boolean);
+
+    return searchIndex
+        .map((item, index) => {
+            const title =
+                item.title.toLowerCase();
+
+            const haystack = [
+                item.title,
+                item.type,
+                item.keywords
+            ]
+                .join(" ")
+                .toLowerCase();
+
+            const words =
+                haystack.split(/\s+/);
+
+            const isMatch =
+                queryTokens.every((token) => {
+                    return (
+                        haystack.includes(token) ||
+                        words.some((word) =>
+                            word.startsWith(token)
+                        )
+                    );
+                });
+
+            if (!isMatch) {
+                return null;
+            }
+
+            let score = index;
+
+            if (item.type === "Service") {
+                score -= 100;
+            }
+
+            if (title.startsWith(normalizedQuery)) {
+                score -= 60;
+            }
+
+            if (
+                queryTokens.some((token) =>
+                    title
+                        .split(/\s+/)
+                        .some((word) =>
+                            word.startsWith(token)
+                        )
+                )
+            ) {
+                score -= 25;
+            }
+
+            return {
+                item,
+                score
+            };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.score - b.score)
+        .slice(0, limit)
+        .map((match) => match.item);
+}
+
+
+function renderMenuSearchResults(
     query,
     searchIndex,
     container
@@ -824,31 +957,80 @@ function renderSearchResults(
     container.replaceChildren();
 
     const normalizedQuery =
-        query.trim().toLowerCase();
+        query.trim();
 
-    const queryTokens =
-        normalizedQuery
-            .split(/\s+/)
-            .filter(Boolean);
+    if (!normalizedQuery) {
+        container.hidden = true;
+        return;
+    }
 
     const matches =
-        normalizedQuery.length === 0
-            ? searchIndex.slice(0, 6)
-            : searchIndex
-                .filter((item) => {
-                    const haystack = [
-                        item.title,
-                        item.type,
-                        item.keywords
-                    ]
-                        .join(" ")
-                        .toLowerCase();
+        getSearchMatches(
+            normalizedQuery,
+            searchIndex,
+            5
+        );
 
-                    return queryTokens.every(
-                        (token) => haystack.includes(token)
-                    );
-                })
-                .slice(0, 8);
+    container.hidden = false;
+
+    if (!matches.length) {
+        const empty =
+            document.createElement("p");
+
+        empty.className =
+            "menu-panel__search-empty";
+
+        empty.textContent =
+            "No services found.";
+
+        container.appendChild(empty);
+        return;
+    }
+
+    matches.forEach((item) => {
+        const link =
+            document.createElement("a");
+
+        link.className =
+            "menu-panel__search-result";
+
+        link.href = item.url;
+
+        const title =
+            document.createElement("span");
+
+        title.textContent =
+            item.title;
+
+        const type =
+            document.createElement("small");
+
+        type.textContent =
+            item.type;
+
+        link.append(title, type);
+        container.appendChild(link);
+    });
+}
+
+
+function renderSearchResults(
+    query,
+    searchIndex,
+    container
+) {
+    if (!container) {
+        return;
+    }
+
+    container.replaceChildren();
+
+    const matches =
+        getSearchMatches(
+            query,
+            searchIndex,
+            query.trim() ? 8 : 6
+        );
 
     if (!matches.length) {
         const empty =
@@ -901,9 +1083,7 @@ function renderSearchResults(
 }
 
 
-/* =========================================================
-   5. COOKIE CARD
-   ========================================================= */
+
 
 function initCookies(config) {
     const card =
@@ -996,10 +1176,7 @@ function initCookies(config) {
                 choice
             );
         } catch (error) {
-            /*
-               Storage may be blocked.
-               The card can still close normally.
-            */
+
         }
 
         card.classList.add(
@@ -1023,9 +1200,7 @@ function initCookies(config) {
 }
 
 
-/* =========================================================
-   6. CONTACT FORMS
-   ========================================================= */
+
 
 function initForms(config) {
     const forms =
@@ -1195,9 +1370,7 @@ function showFormStatus(
 }
 
 
-/* =========================================================
-   7. NAVIGATION
-   ========================================================= */
+
 
 function initNavigation() {
     const currentFile =
@@ -1335,9 +1508,7 @@ function initHomeSectionNavigation() {
 }
 
 
-/* =========================================================
-   8. HEADER SERVICES DROPDOWN
-   ========================================================= */
+
 
 function initServicesDropdown() {
     const wrapper =
@@ -1434,13 +1605,7 @@ function initServicesDropdown() {
     trigger.addEventListener(
         "pointerdown",
         () => {
-            /*
-               Captured before the browser shifts focus to the
-               button (which happens on mousedown and already
-               opens the panel via "focusin"). Without this
-               snapshot, "click" would always see an
-               already-open panel and immediately close it.
-            */
+
 
             wasOpenBeforeInteraction = isOpen;
         }
@@ -1449,11 +1614,7 @@ function initServicesDropdown() {
     trigger.addEventListener(
         "click",
         () => {
-            /*
-               On hover-capable pointers, "mouseenter" already
-               manages the open state, so a click here should
-               only ever open (never surprise-close on click).
-            */
+
 
             if (hoverQuery.matches) {
                 openDropdown();
@@ -1582,9 +1743,7 @@ function initServicesDropdown() {
 }
 
 
-/* =========================================================
-   9. AOS
-   ========================================================= */
+
 
 function initAOS() {
     if (!window.AOS) {
